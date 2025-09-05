@@ -4,6 +4,14 @@ import model.Banco;
 
 public class Burbuja extends IOrdenador {
 
+    private long[] elementos;
+    
+     /**
+     * Constructor de la clase Burbuja.
+     *
+     * @param banco instancia de la clase Banco que contiene los candidatos a ordenar.
+     */
+
     public Burbuja(Banco banco) {
         super(banco);
     }
@@ -11,7 +19,7 @@ public class Burbuja extends IOrdenador {
     public void ordenar(String atributo) {
        long valor1, valor2, swap;
        int swapped;
-       long[] elementos = this.getAtributos(atributo);
+       this.elementos = this.getAtributos(atributo);
         while(true) {
         swapped = 0;
         for (int i = 0; i+1 < elementos.length; i++) {
