@@ -36,7 +36,7 @@ package model;
 		 * Permite añadir, eliminar, buscar, mover y mostrar candidatos dentro del banco.
 		 */
 
-		private Candidato[] candidatos;
+		public Candidato[] candidatos;
 		private int tamano;
 		private int ocupados;
 		
@@ -50,7 +50,9 @@ package model;
 			this.ocupados = 0;
 			candidatos = new Candidato[tamano];
 		}
-
+		public void setCandidatos(Candidato[] candidatos) {
+			this.candidatos = candidatos;
+		}
 		/**
 		 * Añade un candidato al banco si hay espacio disponible.
 		 * 

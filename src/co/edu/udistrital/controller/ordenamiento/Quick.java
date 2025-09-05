@@ -29,9 +29,6 @@ import model.Banco;
  */
 public class Quick extends IOrdenador {
 
-    private int intercambios;
-    private long[] elementos;
-
     /**
      * Constructor de la clase Quick.
      *
@@ -114,11 +111,4 @@ public class Quick extends IOrdenador {
         }
     }
 
-	public int getIntercambios() {
-		return intercambios;
-	}
-
-	public void setIntercambios(int intercambios) {
-		this.intercambios = intercambios;
-	}
 }

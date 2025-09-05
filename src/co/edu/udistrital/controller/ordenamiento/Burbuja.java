@@ -3,8 +3,6 @@ package controller.ordenamiento;
 import model.Banco;
 
 public class Burbuja extends IOrdenador {
-
-    private long[] elementos;
     
      /**
      * Constructor de la clase Burbuja.
@@ -20,6 +18,7 @@ public class Burbuja extends IOrdenador {
        long valor1, valor2, swap;
        int swapped;
        this.elementos = this.getAtributos(atributo);
+       this.setIntercambios(0);
         while(true) {
         swapped = 0;
         for (int i = 0; i+1 < elementos.length; i++) {
@@ -32,6 +31,7 @@ public class Burbuja extends IOrdenador {
                 this.banco.mover(i, i+1);
                 elementos[i+1] = swap;
                 swapped++;
+                this.setIntercambios(this.getIntercambios() + 1);
             }
         }
             if (swapped == 0) break;

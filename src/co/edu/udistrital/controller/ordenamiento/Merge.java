@@ -28,9 +28,6 @@ import model.Banco;
  */
 public class Merge extends IOrdenador {
 
-    private int intercambios;
-    private long[] elementos;
-
     /**
      * Constructor de la clase Merge.
      *
@@ -50,7 +47,7 @@ public class Merge extends IOrdenador {
     @Override
     public void ordenar(String atributo) 
     {   this.elementos = this.getAtributos(atributo);
-        setIntercambios(0);
+        this.setIntercambios(0);
         mergeSort(0, this.banco.getOcupados() - 1);
     }
 
@@ -117,7 +114,7 @@ public class Merge extends IOrdenador {
                 j++;
             }
             k++;
-            setIntercambios(getIntercambios() + 1);
+            this.setIntercambios(getIntercambios() + 1);
         }
 
         // Copiar los elementos restantes de izquierda[]
@@ -135,7 +132,7 @@ public class Merge extends IOrdenador {
             elementos[k] = derecha[j];
             j++;
             k++;
-            setIntercambios(getIntercambios() + 1);
+            this.setIntercambios(getIntercambios() + 1);
         }
 
         // Actualizar el banco según el nuevo orden
@@ -145,11 +142,4 @@ public class Merge extends IOrdenador {
         }
     }
 
-	public int getIntercambios() {
-		return intercambios;
-	}
-
-	public void setIntercambios(int intercambios) {
-		this.intercambios = intercambios;
-	}
 }

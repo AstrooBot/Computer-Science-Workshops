@@ -29,8 +29,7 @@ import model.Banco;
  */
 public class Selection extends IOrdenador {
 
-    private int intercambios;
-    private long[] elementos;
+    
 
     /**
      * Constructor de la clase Selection.
@@ -89,12 +88,4 @@ public class Selection extends IOrdenador {
         this.banco.mover(i, j);
         setIntercambios(getIntercambios() + 1);
     }
-
-	public int getIntercambios() {
-		return intercambios;
-	}
-
-	public void setIntercambios(int intercambios) {
-		this.intercambios = intercambios;
-	}
 }

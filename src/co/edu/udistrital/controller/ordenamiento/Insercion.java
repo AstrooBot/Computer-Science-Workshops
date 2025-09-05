@@ -18,6 +18,7 @@ public class Insercion extends IOrdenador {
     public void ordenar(String atributo) {
 
     this.elementos = this.getAtributos(atributo);
+    this.setIntercambios(0);
     for (int i = 1; i < elementos.length; i++) {
         long ref = elementos[i];
         int innerIndex = i - 1;
@@ -26,6 +27,7 @@ public class Insercion extends IOrdenador {
             elementos[innerIndex + 1] = elementos[innerIndex];
             this.banco.mover(innerIndex, innerIndex + 1);
             innerIndex--;
+            this.setIntercambios(this.getIntercambios() + 1);
             }
         elementos[innerIndex + 1] = ref;
         }  
