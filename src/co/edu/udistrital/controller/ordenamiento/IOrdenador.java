@@ -1,6 +1,4 @@
-package controller;
-
-import java.util.Arrays;
+package controller.ordenamiento;
 
 import model.Banco;
 import model.Candidato;
@@ -8,24 +6,30 @@ import model.Candidato;
 public abstract class IOrdenador {
 
     public Banco banco;
-    public long[] elementos;
 
     public IOrdenador(Banco banco) {
         this.banco = banco;
     }
-
+    //TODO: posible memoty leak y revisar funcionalidad
     public long[] getAtributos(String atributo) {
-        long[] acum;
+
+        int acumTamano = 0;
+
+        for(int i = 0; i < this.banco.getOcupados(); i++) {
+            acumTamano += (int) this.banco.buscar(i).getAtributos(atributo).length;
+        } 
+
+        long[] acum = new long[acumTamano];
         int pos = 0;
         for (int i = 0; i < this.banco.getOcupados(); i++) {
             Candidato candidato = this.banco.buscar(i);
-            acum = System.arraycopy(candidato.getAtributos(atributo), 0, acum, pos, candidato.getAtributos(atributo).length);
+            System.arraycopy(candidato.getAtributos(atributo), 0 , acum, pos, candidato.getAtributos(atributo).length);
             pos += candidato.getAtributos(atributo).length;
         }
         return acum;
     }
 
-    //TODO: verificar optimización
+    //TODO: posible memory leak
     public long verficarData(long[] data) {
         long anterior = data[0];
         long contador = 0;
@@ -40,6 +44,6 @@ public abstract class IOrdenador {
         return contador; 
     }
 
-    public abstract void ordenar();
+    public abstract void ordenar(String atributo);
     
 }

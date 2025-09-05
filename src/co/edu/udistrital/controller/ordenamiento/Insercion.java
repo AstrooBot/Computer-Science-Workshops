@@ -1,0 +1,26 @@
+package controller.ordenamiento;
+
+import model.Banco;
+
+public class Insercion extends IOrdenador {
+
+    public Insercion(Banco banco) {
+        super(banco);
+    }
+    @Override
+    public void ordenar(String atributo) {
+
+    long[] elementos = this.getAtributos(atributo);
+    for (int i = 1; i < elementos.length; i++) {
+        long ref = elementos[i];
+        int innerIndex = i - 1;
+
+        while (innerIndex >= 0 && elementos[innerIndex] > ref) {
+            elementos[innerIndex + 1] = elementos[innerIndex];
+            this.banco.mover(innerIndex, innerIndex + 1);
+            innerIndex--;
+            }
+        elementos[innerIndex + 1] = ref;
+        }  
+    }
+}
