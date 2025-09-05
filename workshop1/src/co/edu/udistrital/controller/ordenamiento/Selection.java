@@ -29,8 +29,6 @@ import model.Banco;
  */
 public class Selection extends IOrdenador {
 
-    
-
     /**
      * Constructor de la clase Selection.
      *
@@ -49,8 +47,15 @@ public class Selection extends IOrdenador {
      */
     @Override
     public void ordenar(String atributo) 
-    {   this.elementos = this.getAtributos(atributo);
-        setIntercambios(0);
+    {
+        comparaciones = 0;
+        intercambios = 0;
+        tiempoMs = 0;
+        tiempoCpuMs = 0;
+
+        long inicioWall = System.nanoTime();
+        long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
+    	
         int n = this.banco.getOcupados();
 
         for (int i = 0; i < n - 1; i++) 
@@ -59,7 +64,8 @@ public class Selection extends IOrdenador {
 
             // Buscar el índice del menor elemento en el resto del arreglo
             for (int j = i + 1; j < n; j++) 
-            {
+            {	
+            	comparaciones++;
                 if (elementos[j] < elementos[minIndex]) 
                 {
                     minIndex = j;
@@ -72,6 +78,12 @@ public class Selection extends IOrdenador {
                 intercambiar(i, minIndex);
             }
         }
+        
+        long finWall = System.nanoTime();
+        long finCpu = threadMXBean.getCurrentThreadCpuTime();
+
+        tiempoMs = (finWall - inicioWall) / 1_000_000;
+        tiempoCpuMs = (finCpu - inicioCpu) / 1_000_000;
     }
 
     /**
@@ -88,4 +100,29 @@ public class Selection extends IOrdenador {
         this.banco.mover(i, j);
         setIntercambios(getIntercambios() + 1);
     }
+    
+	public long getComparaciones() {
+		return comparaciones;
+	}
+
+	public void setComparaciones(long comparaciones) {
+		this.comparaciones = comparaciones;
+	}
+
+	public long getIntercambios() {
+		return intercambios;
+	}
+
+	public void setIntercambios(long intercambios) {
+		this.intercambios = intercambios;
+	}
+
+	public long getTiempoMs() {
+		return tiempoMs;
+	}
+
+	public void setTiempoMs(long tiempoMs) {
+		this.tiempoMs = tiempoMs;
+	}
+    
 }

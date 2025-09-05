@@ -2,6 +2,9 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -162,6 +165,7 @@ public class Generador {
     }
 
     public Banco generarBanco(int cantidadAtributos) {
+        this.cargarDatos();
         Banco banco = new Banco(this.cantidad);
         Candidato[] candidatos = this.generarCandidatos(cantidadAtributos);
         for (int i = 0; i < candidatos.length; i++) {
@@ -169,6 +173,50 @@ public class Generador {
         }
         banco.setCandidatos(candidatos);
         return banco;
+    }
+
+    public void prepararDatos(Banco banco, long[] elementos, String modo) {
+        
+        int n = elementos.length;
+        // Pasar elementos[] a lista para manipular fácilmente
+        List<Long> lista = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) 
+        {
+            lista.add(elementos[i]);
+        }
+
+        switch (modo.toLowerCase()) 
+        {
+            case "aleatoria uniforme":
+                Collections.shuffle(lista);
+                break;
+
+            case "casi ordenada":
+                Collections.sort(lista);
+                // Realizar algunas perturbaciones al azar
+                int perturbaciones = Math.max(1, n / 10); // 10% del tamaño
+                for (int i = 0; i < perturbaciones; i++) {
+                    int a = random.nextInt(n);
+                    int b = random.nextInt(n);
+                    Collections.swap(lista, a, b);
+                }
+                break;
+
+            case "orden inverso":
+                lista.sort(Collections.reverseOrder());
+                break;
+        }
+
+        // Copiar de vuelta a elementos[] y actualizar banco
+        for (int i = 0; i < n; i++) {
+            elementos[i] = lista.get(i);
+            banco.mover(i, i); // mantiene sincronía
+        }
+    }
+
+    public Candidato seleccionarCandidato(Banco banco) {
+        return banco.buscar(0);
     }
 
 }

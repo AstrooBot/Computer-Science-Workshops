@@ -36,7 +36,6 @@ public class Merge extends IOrdenador {
     public Merge(Banco banco) 
     {
         super(banco);
-        this.setIntercambios(0);
     }
 
     /**
@@ -46,9 +45,22 @@ public class Merge extends IOrdenador {
      */
     @Override
     public void ordenar(String atributo) 
-    {   this.elementos = this.getAtributos(atributo);
-        this.setIntercambios(0);
+    {
+        comparaciones = 0;
+        intercambios = 0;
+        tiempoMs = 0;
+        tiempoCpuMs = 0;
+        
+        long inicioWall = System.nanoTime();
+        long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
+
         mergeSort(0, this.banco.getOcupados() - 1);
+        
+        long finWall = System.nanoTime();
+        long finCpu = threadMXBean.getCurrentThreadCpuTime();
+
+        tiempoMs = (finWall - inicioWall) / 1_000_000;
+        tiempoCpuMs = (finCpu - inicioCpu) / 1_000_000;
     }
 
     /**
@@ -104,6 +116,8 @@ public class Merge extends IOrdenador {
         // Fusionar los arreglos temporales de vuelta en elementos[]
         while (i < n1 && j < n2) 
         {
+        	comparaciones++;
+        	
             if (izquierda[i] <= derecha[j]) 
             {
                 elementos[k] = izquierda[i];
@@ -114,7 +128,6 @@ public class Merge extends IOrdenador {
                 j++;
             }
             k++;
-            this.setIntercambios(getIntercambios() + 1);
         }
 
         // Copiar los elementos restantes de izquierda[]
@@ -123,7 +136,7 @@ public class Merge extends IOrdenador {
             elementos[k] = izquierda[i];
             i++;
             k++;
-            setIntercambios(getIntercambios() + 1);
+            intercambios++; 
         }
 
         // Copiar los elementos restantes de derecha[]
@@ -132,7 +145,7 @@ public class Merge extends IOrdenador {
             elementos[k] = derecha[j];
             j++;
             k++;
-            this.setIntercambios(getIntercambios() + 1);
+            intercambios++; 
         }
 
         // Actualizar el banco según el nuevo orden
@@ -141,5 +154,4 @@ public class Merge extends IOrdenador {
             this.banco.mover(pos, pos); // mantiene sincronía con el banco
         }
     }
-
 }

@@ -1,7 +1,4 @@
 package view;
-
-import java.awt.EventQueue;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JFrame;
@@ -9,7 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import controller.Generador;
 import controller.ordenamiento.Burbuja;
+import controller.ordenamiento.IOrdenador;
 import controller.ordenamiento.Merge;
 import controller.ordenamiento.Quick;
 import controller.ordenamiento.Selection;
@@ -22,7 +21,7 @@ import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textFieldCantidadCandidatos;
 	private ButtonGroup opcionesOrdenamiento;
 	private ButtonGroup opcionesParametros;
@@ -32,27 +31,14 @@ public class VentanaPrincipal {
 	
 	private Banco banco;
 	
+	private IOrdenador ordenarOpcion;
+	
 	private Burbuja burbuja;
 	private Selection selection;
 	private Quick quick;
 	private Merge merge;
+	private JTextField textFieldSemilla;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipal window = new VentanaPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -70,12 +56,21 @@ public class VentanaPrincipal {
 		frame.getContentPane().setLayout(null);
 		
 		textFieldCantidadCandidatos = new JTextField();
-		textFieldCantidadCandidatos.setBounds(133, 40, 86, 20);
+		textFieldCantidadCandidatos.setBounds(160, 40, 86, 20);
 		frame.getContentPane().add(textFieldCantidadCandidatos);
 		textFieldCantidadCandidatos.setColumns(10);
 		
+		JLabel lblGeneradorSemilla = new JLabel("semilla:");
+		lblGeneradorSemilla.setBounds(256, 32, 86, 37);
+		frame.getContentPane().add(lblGeneradorSemilla);
+		
+		textFieldSemilla = new JTextField();
+		textFieldSemilla.setColumns(10);
+		textFieldSemilla.setBounds(316, 40, 86, 20);
+		frame.getContentPane().add(textFieldSemilla);
+		
 		JLabel lblGeneradorCandidatos = new JLabel("Generar Candidatos: ");
-		lblGeneradorCandidatos.setBounds(24, 32, 112, 37);
+		lblGeneradorCandidatos.setBounds(24, 32, 126, 37);
 		frame.getContentPane().add(lblGeneradorCandidatos);
 		
 		lblOrdenarDeManera = new JLabel("Ordenar de manera:");
@@ -262,7 +257,8 @@ public class VentanaPrincipal {
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				textFieldCantidadCandidatos.setText("");
+				textFieldCantidadCandidatos.setText("1");
+				textFieldSemilla.setText("1");
 				
 				opcionesOrdenamiento.clearSelection();
 				opcionesParametros.clearSelection();
@@ -304,28 +300,38 @@ public class VentanaPrincipal {
 				try
 				{
 					cantCandidatos = Integer.parseInt(textFieldCantidadCandidatos.getText());
+
 					String opcionOrdenamiento = "";
 					String opcionParametro = "";
 					
-					if(cantCandidatos < 10000000)
-					{
-						JOptionPane.showMessageDialog(null, "El numero de candidatos debe ser mayor a 10000000");
-						cantCandidatos = Integer.parseInt(textFieldCantidadCandidatos.getText());
-					}
-					
+					/*while(cantCandidatos < 1000000 )
+					{	
+						cantCandidatos = Integer.parseInt(JOptionPane.showInputDialog("El numero de candidatos debe ser mayor a 10000000"));
+					} */
+					textFieldCantidadCandidatos.setText(String.valueOf(cantCandidatos));
+					//TODO: <jndiazs@udistrital.edu.co>
+					long semilla = Long.parseLong(textFieldSemilla.getText());
+					textFieldSemilla.setText(String.valueOf(semilla));
+					Generador generador = new Generador(cantCandidatos, semilla);
+					banco = generador.generarBanco(5);
+					//banco = new Banco(cantCandidatos);
+					ordenarOpcion = new Quick(banco);
 					
 					ButtonModel seleccionadoOrden = opcionesOrdenamiento.getSelection();
 					if(seleccionadoOrden == rdbtnOpcionAleatoriaUniforme.getModel())
 					{
 						opcionOrdenamiento = "aleatoria uniforme";
+						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else if(seleccionadoOrden == rdbtnOpcionCasiOrdenada.getModel())
 					{
 						opcionOrdenamiento = "Casi ordenada";
+						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else if(seleccionadoOrden == rdbtnOpcionOrdenInverso.getModel())
 					{
 						opcionOrdenamiento = "orden inverso";
+						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else
 					{
@@ -362,8 +368,6 @@ public class VentanaPrincipal {
 					System.out.println(opcionOrdenamiento);
 					System.out.println(opcionParametro);
 					
-					banco = new Banco(cantCandidatos);
-					
 					burbuja = new Burbuja(banco);
 					selection = new Selection(banco);
 					quick = new Quick(banco);
@@ -374,11 +378,33 @@ public class VentanaPrincipal {
 					quick.ordenar(opcionParametro);
 					merge.ordenar(opcionParametro);
 					
-					System.out.println("Banco ordenado exitosamente con todos los algoritmos!");
+					JOptionPane.showMessageDialog(null, "Banco ordenado exitosamente con todos los algoritmos!");
+					
+					lblNumIntercambiosBurbuja.setText(String.valueOf(burbuja.getIntercambios()));
+					lblNumComparacionesBurbuja.setText(String.valueOf(burbuja.getComparaciones()));
+					lblTiempoEjecBurbuja.setText(String.valueOf(burbuja.getTiempoCpuMs()));
+					lblTiempoParedBurbuja.setText(String.valueOf(burbuja.getTiempoMs()));
+					
+					lblNumIntercambiosSeleccion.setText(String.valueOf(selection.getIntercambios()));
+					lblNumComparacionesSeleccion.setText(String.valueOf(selection.getComparaciones()));
+					lblTiempoEjecSeleccion.setText(String.valueOf(selection.getTiempoCpuMs()));
+					lblTiempoParedSeleccion.setText(String.valueOf(selection.getTiempoMs()));
+					
+					lblNumIntercambiosQuick.setText(String.valueOf(quick.getIntercambios()));
+					lblNumComparacionesQuick.setText(String.valueOf(quick.getComparaciones()));
+					lblTiempoEjecQuick.setText(String.valueOf(quick.getTiempoCpuMs()));
+					lblTiempoParedQuick.setText(String.valueOf(quick.getTiempoMs()));
+					
+					lblNumIntercambiosMerge.setText(String.valueOf(merge.getIntercambios()));
+					lblNumComparacionesMerge.setText(String.valueOf(merge.getComparaciones()));
+					lblTiempoEjecMerge.setText(String.valueOf(merge.getTiempoCpuMs()));
+					lblTiempoParedMerge.setText(String.valueOf(merge.getTiempoMs()));
+					
 				}
 				catch(Exception exception)
 				{
 					JOptionPane.showMessageDialog(null, exception.getMessage());
+					exception.printStackTrace();
 				}
 			}
 		});

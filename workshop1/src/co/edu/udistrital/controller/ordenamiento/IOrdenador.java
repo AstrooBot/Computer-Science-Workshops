@@ -1,9 +1,7 @@
 package controller.ordenamiento;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 
 import model.Banco;
 import model.Candidato;
@@ -11,8 +9,22 @@ import model.Candidato;
 public abstract class IOrdenador {
 
     public Banco banco;
-    private int intercambios;
+    protected long intercambios;
     public long[] elementos;
+
+    protected long comparaciones;
+    protected long tiempoMs;
+    protected long tiempoCpuMs;
+    
+    protected static final ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+
+    public long getTiempoCpuMs() {
+		return tiempoCpuMs;
+	}
+
+	public void setTiempoCpuMs(long tiempoCpuMs) {
+		this.tiempoCpuMs = tiempoCpuMs;
+	}
 
 
     public IOrdenador(Banco banco) {
@@ -52,46 +64,7 @@ public abstract class IOrdenador {
         return contador; 
     }
 
-    public void prepararDatos(String modo) {
-        int n = this.banco.getOcupados();
-
-        // Pasar elementos[] a lista para manipular fácilmente
-        List<Long> lista = new ArrayList<>();
-        for (int i = 0; i < n; i++) 
-        {
-            lista.add(elementos[i]);
-        }
-
-        switch (modo.toLowerCase()) 
-        {
-            case "aleatoria uniforme":
-                Collections.shuffle(lista);
-                break;
-
-            case "Casi ordenada":
-                Collections.sort(lista);
-                // Realizar algunas perturbaciones al azar
-                Random rand = new Random();
-                int perturbaciones = Math.max(1, n / 10); // 10% del tamaño
-                for (int i = 0; i < perturbaciones; i++) {
-                    int a = rand.nextInt(n);
-                    int b = rand.nextInt(n);
-                    Collections.swap(lista, a, b);
-                }
-                break;
-
-            case "orden inverso":
-                lista.sort(Collections.reverseOrder());
-                break;
-        }
-
-        // Copiar de vuelta a elementos[] y actualizar banco
-        for (int i = 0; i < n; i++) {
-            elementos[i] = lista.get(i);
-            this.banco.mover(i, i); // mantiene sincronía
-        }
-    }
-    public int getIntercambios() {
+    public long getIntercambios() {
 		return intercambios;
 	}
 
@@ -100,5 +73,21 @@ public abstract class IOrdenador {
 	}
 
     public abstract void ordenar(String atributo);
+
+	public long getComparaciones() {
+		return comparaciones;
+	}
+
+	public void setComparaciones(long comparaciones) {
+		this.comparaciones = comparaciones;
+	}
+
+	public long getTiempoMs() {
+		return tiempoMs;
+	}
+
+	public void setTiempoMs(long tiempoMs) {
+		this.tiempoMs = tiempoMs;
+	}
     
 }
