@@ -52,6 +52,7 @@ package model;
 		}
 		public void setCandidatos(Candidato[] candidatos) {
 			this.candidatos = candidatos;
+
 		}
 		/**
 		 * Añade un candidato al banco si hay espacio disponible.
@@ -86,30 +87,26 @@ package model;
 			return this.ocupados;
 		}
 
-		/**
-		 * Elimina el candidato en la posición especificada.
-		 * 
-		 * @param posicion la posición del candidato a eliminar.
-		 * @deprecated Posible fuga de memoria, no usar.
-		 */
-		public void eliminar(int posicion) {
-			if(posicion >= 0 && posicion <= this.ocupados) {
-				this.candidatos[posicion] = null;
-				this.ocupados--;
-				for(int i = posicion; i < this.ocupados; i++) {
-					this.candidatos[i] = this.candidatos[i+1];
-				}
+	/**
+	 * Elimina el candidato en la posición especificada.
+	 * 
+	 * @param posicion la posición del candidato a eliminar.
+	 * @deprecated Posible fuga de memoria, no usar.
+	 */
+	public void eliminar(int posicion) {
+		if(posicion >= 0 && posicion < this.ocupados) {
+			this.candidatos[posicion] = null;
+			this.ocupados--;
+			for(int i = posicion; i < this.ocupados; i++) {
+				this.candidatos[i] = this.candidatos[i+1];
 			}
 		}
-
-		public Candidato buscar(int posicion) {
-			if(posicion >= 0 && posicion <= this.ocupados) {
-				return this.candidatos[posicion];
-			}
-			return null;
+	}	public Candidato buscar(int posicion) {
+		if(posicion >= 0 && posicion < this.ocupados) {
+			return this.candidatos[posicion];
 		}
-
-		public Candidato getById(int id) {
+		return null;
+	}		public Candidato getById(int id) {
 			Candidato candidato = null;
 			for(int i = 0; i < this.ocupados; i++) {
 				if(this.candidatos[i].getId() == id) {
@@ -120,21 +117,19 @@ package model;
 			return candidato;
 		}
 
-		/**
-		 * Intercambia los candidatos entre dos posiciones especificadas.
-		 * 
-		 * @param posicionVieja la posición original del candidato.
-		 * @param posicionNueva la nueva posición a la que se moverá el candidato.
-		 */
-		public void mover(int posicionVieja, int posicionNueva) {
-			if(posicionVieja >= 0 && posicionVieja <= this.ocupados && posicionNueva >= 0 && posicionNueva <= this.ocupados) {
-				Candidato temp = this.candidatos[posicionVieja];
-				this.candidatos[posicionVieja] = this.candidatos[posicionNueva];
-				this.candidatos[posicionNueva] = temp;
-			}
+	/**
+	 * Intercambia los candidatos entre dos posiciones especificadas.
+	 * 
+	 * @param posicionVieja la posición original del candidato.
+	 * @param posicionNueva la nueva posición a la que se moverá el candidato.
+	 */
+	public void mover(int posicionVieja, int posicionNueva) {
+		if(posicionVieja >= 0 && posicionVieja < this.ocupados && posicionNueva >= 0 && posicionNueva < this.ocupados) {
+			Candidato temp = this.candidatos[posicionVieja];
+			this.candidatos[posicionVieja] = this.candidatos[posicionNueva];
+			this.candidatos[posicionNueva] = temp;
 		}
-
-		/**
+	}		/**
 		 * Muestra una representación en cadena de los candidatos almacenados en el banco.
 		 * 
 		 * @return una cadena con la información de todos los candidatos en el banco.
@@ -146,4 +141,18 @@ package model;
 			}
 			return acum;
 		}
+
+		public long[] getAtributos(String atributo) {
+		long[] acum = new long[ocupados];
+		
+		for (int i = 0; i < ocupados; i++) {
+			long[] candidatoAtributos = this.candidatos[i].getAtributos(atributo);
+			if (candidatoAtributos != null && candidatoAtributos.length > 0) {
+				acum[i] = candidatoAtributos[0]; // Tomar el primer elemento del array de atributos
+			} else {
+				acum[i] = 0; // Valor por defecto si no hay atributos
+			}
+		}
+		return acum;
+	}
 	}

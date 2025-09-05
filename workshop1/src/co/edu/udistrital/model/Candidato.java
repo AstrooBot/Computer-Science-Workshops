@@ -49,20 +49,28 @@ public class Candidato {
     }
 
     public long[] getAtributos(String atributo) {
+        long[] res = null;
         switch (atributo.toLowerCase()) {
             case "marchas":
-                return this.getMarchas();
+                res = this.getMarchas();
+                break;
             case "clases":
-                return this.getClases();
+                res =  this.getClases();
+                break;
             case "sobornos":
-                return this.getSobornos();
+                res = this.getSobornos();
+                break;
             case "actoscorrupcion":
-                return this.getActosCorrupcion();
+                res = this.getActosCorrupcion();
+                break;
             case "prebendas":
-                return this.getPrebendas();
+                res = this.getPrebendas();
+                break;
             default:
-                return null;
+                res = new long[0]; // Retornar array vacío en lugar de null
+                break;
         }
+        return res != null ? res : new long[0]; // Doble protección
     }
 
     public String getNombre() {
@@ -89,6 +97,9 @@ public class Candidato {
     }
 
     public long[] getMarchas() {
+        if (this.marchas == null || this.marchas.length == 0) {
+            return new long[0];
+        }
         long[] acum = new long[this.marchas.length];
         for (int i = 0; i < acum.length; i++) {
             acum[i] = this.marchas[i].getValor();
@@ -101,6 +112,9 @@ public class Candidato {
     }
 
     public long[] getClases() {
+        if (this.clases == null || this.clases.length == 0) {
+            return new long[0];
+        }
         long[] acum = new long[this.clases.length];
         for (int i = 0; i < acum.length; i++) {
             acum[i] = this.clases[i].getValor();
@@ -113,6 +127,9 @@ public class Candidato {
     }
 
     public long[] getSobornos() {
+        if (this.sobornos == null || this.sobornos.length == 0) {
+            return new long[0];
+        }
         long[] acum = new long[this.sobornos.length];
         for (int i = 0; i < acum.length; i++) {
             acum[i] = this.sobornos[i].getValor();
@@ -125,6 +142,9 @@ public class Candidato {
     }
 
     public long[] getActosCorrupcion() {
+        if (this.actosCorrupcion == null || this.actosCorrupcion.length == 0) {
+            return new long[0];
+        }
         long[] acum = new long[this.actosCorrupcion.length];
         for (int i = 0; i < acum.length; i++) {
             acum[i] = this.actosCorrupcion[i].getValor();
@@ -137,6 +157,9 @@ public class Candidato {
     }
 
     public long[] getPrebendas() {
+        if (this.prebendas == null || this.prebendas.length == 0) {
+            return new long[0];
+        }
         long[] acum = new long[this.prebendas.length];
         for (int i = 0; i < acum.length; i++) {
             acum[i] = this.prebendas[i].getValor();

@@ -4,8 +4,6 @@ import model.Banco;
 
 public class Insercion extends IOrdenador {
 
-    private long[] elementos;
-    
      /**
      * Constructor de la clase Insercion.
      *
@@ -16,10 +14,12 @@ public class Insercion extends IOrdenador {
     }
     @Override
     public void ordenar(String atributo) {
-        comparaciones = 0;
-        intercambios = 0;
+        this.comparaciones = 0;
+        this.intercambios = 0;
         tiempoMs = 0;
         tiempoCpuMs = 0;
+
+        this.elementos = this.banco.getAtributos(atributo);
         
         long inicioWall = System.nanoTime();
         long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
@@ -30,12 +30,15 @@ public class Insercion extends IOrdenador {
         int innerIndex = i - 1;
 
         while (innerIndex >= 0 && elementos[innerIndex] > ref) {
-            comparaciones++;
+            
             elementos[innerIndex + 1] = elementos[innerIndex];
-            this.banco.mover(innerIndex, innerIndex + 1);
+            intercambiar(innerIndex, innerIndex + 1);
             innerIndex--;
-            intercambios++;
+            this.setIntercambios(this.getIntercambios() + 1);
             }
+    
+        this.comparaciones++; 
+
         elementos[innerIndex + 1] = ref;
         }
     long finWall = System.nanoTime();
@@ -43,5 +46,13 @@ public class Insercion extends IOrdenador {
 
     tiempoMs = (finWall - inicioWall) / 1_000_000;
     tiempoCpuMs = (finCpu - inicioCpu) / 1_000_000;  
+    }
+        private void intercambiar(int i, int j) 
+    {
+        long temp = elementos[i];
+        elementos[i] = elementos[j];
+        elementos[j] = temp;
+        banco.mover(i, j);
+        intercambios++;
     }
 }

@@ -1,7 +1,6 @@
 package controller.ordenamiento;
 
 public class Burbuja extends IOrdenador {
-
     public Burbuja(model.Banco banco) {
         super(banco);
     }
@@ -13,6 +12,8 @@ public class Burbuja extends IOrdenador {
         intercambios = 0;
         tiempoMs = 0;
         tiempoCpuMs = 0;
+
+        this.elementos = this.banco.getAtributos(atributo);
         
         long inicioWall = System.nanoTime();
         long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
@@ -28,16 +29,16 @@ public class Burbuja extends IOrdenador {
         	{
         		comparaciones++;
         	
-        		valor1 = elementos[i];
-        		valor2 = elementos[i+1];
+        		valor1 = this.elementos[i];
+        		valor2 = this.elementos[i+1];
 
         		if(valor1 > valor2) {
-        			swap = elementos[i];
-        			elementos[i] = elementos[i+1];
+        			swap = this.elementos[i];
+        			this.elementos[i] = this.elementos[i+1];
         			this.banco.mover(i, i+1);
-        			elementos[i+1] = swap;
-        			
-        			intercambios++;
+        			this.elementos[i+1] = swap;
+
+        			this.setIntercambios(this.getIntercambios() + 1);
         			swapped++;
         		}
             
@@ -51,4 +52,5 @@ public class Burbuja extends IOrdenador {
         tiempoMs = (finWall - inicioWall) / 1_000_000;
         tiempoCpuMs = (finCpu - inicioCpu) / 1_000_000;
     }
+    
 }

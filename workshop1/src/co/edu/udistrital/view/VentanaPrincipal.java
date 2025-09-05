@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 import controller.Generador;
 import controller.ordenamiento.Burbuja;
-import controller.ordenamiento.IOrdenador;
+import controller.ordenamiento.Insercion;
 import controller.ordenamiento.Merge;
 import controller.ordenamiento.Quick;
 import controller.ordenamiento.Selection;
@@ -21,23 +21,24 @@ import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal {
 
+	// Componentes de la interfaz
 	public JFrame frame;
 	private JTextField textFieldCantidadCandidatos;
 	private ButtonGroup opcionesOrdenamiento;
 	private ButtonGroup opcionesParametros;
 	private JLabel lblOrdenarDeManera;
+	private JTextField textFieldSemilla;
 	
+	// Variables de control
 	private int cantCandidatos;
-	
 	private Banco banco;
 	
-	private IOrdenador ordenarOpcion;
-	
+	// Algoritmos de ordenamiento
 	private Burbuja burbuja;
 	private Selection selection;
+	private Insercion insercion;
 	private Quick quick;
 	private Merge merge;
-	private JTextField textFieldSemilla;
 	
 	/**
 	 * Create the application.
@@ -177,9 +178,9 @@ public class VentanaPrincipal {
 		lblNumComparaciones.setBounds(65, 367, 195, 37);
 		frame.getContentPane().add(lblNumComparaciones);
 		
-		JLabel lblNumComparacionesIsercion = new JLabel("");
-		lblNumComparacionesIsercion.setBounds(323, 367, 59, 37);
-		frame.getContentPane().add(lblNumComparacionesIsercion);
+		JLabel lblNumComparacionesInsercion = new JLabel("");
+		lblNumComparacionesInsercion.setBounds(323, 367, 59, 37);
+		frame.getContentPane().add(lblNumComparacionesInsercion);
 		
 		JLabel lblNumComparacionesSeleccion = new JLabel("");
 		lblNumComparacionesSeleccion.setBounds(443, 367, 59, 37);
@@ -269,7 +270,7 @@ public class VentanaPrincipal {
 				lblTiempoEjecQuick.setText("");
 				lblTiempoEjecMerge.setText("");
 				
-				lblNumComparacionesIsercion.setText("");
+				lblNumComparacionesInsercion.setText("");
 				lblNumComparacionesSeleccion.setText("");
 				lblNumComparacionesBurbuja.setText("");
 				lblNumComparacionesQuick.setText("");
@@ -313,25 +314,23 @@ public class VentanaPrincipal {
 					long semilla = Long.parseLong(textFieldSemilla.getText());
 					textFieldSemilla.setText(String.valueOf(semilla));
 					Generador generador = new Generador(cantCandidatos, semilla);
+					
+
 					banco = generador.generarBanco(5);
-					//banco = new Banco(cantCandidatos);
-					ordenarOpcion = new Quick(banco);
+					
 					
 					ButtonModel seleccionadoOrden = opcionesOrdenamiento.getSelection();
 					if(seleccionadoOrden == rdbtnOpcionAleatoriaUniforme.getModel())
 					{
 						opcionOrdenamiento = "aleatoria uniforme";
-						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else if(seleccionadoOrden == rdbtnOpcionCasiOrdenada.getModel())
 					{
 						opcionOrdenamiento = "Casi ordenada";
-						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else if(seleccionadoOrden == rdbtnOpcionOrdenInverso.getModel())
 					{
 						opcionOrdenamiento = "orden inverso";
-						ordenarOpcion.prepararDatos(opcionOrdenamiento);
 					}
 					else
 					{
@@ -342,22 +341,27 @@ public class VentanaPrincipal {
 					if(seleccionadoParametro == rdbtnDistMarchas.getModel())
 					{
 						opcionParametro = "distancia marchas";
+						generador.prepararDatos(banco, banco.getAtributos("marchas"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnHorasClase.getModel())
 					{
 						opcionParametro = "horas perdidas";
+						generador.prepararDatos(banco, banco.getAtributos("clases"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnPrebSindicales.getModel())
 					{
 						opcionParametro = "prebendas sindicales";
+						generador.prepararDatos(banco, banco.getAtributos("prebendas"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnSobornos.getModel())
 					{
 						opcionParametro = "sobornos";
+						generador.prepararDatos(banco, banco.getAtributos("sobornos"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnActosCorrup.getModel())
 					{
 						opcionParametro = "actos corruptos";
+						generador.prepararDatos(banco, banco.getAtributos("actoscorrupcion"), opcionOrdenamiento);
 					}
 					else
 					{
@@ -368,44 +372,54 @@ public class VentanaPrincipal {
 					System.out.println(opcionOrdenamiento);
 					System.out.println(opcionParametro);
 					
+
 					burbuja = new Burbuja(banco);
+					insercion = new Insercion(banco);
 					selection = new Selection(banco);
 					quick = new Quick(banco);
 					merge = new Merge(banco);
 					
 					burbuja.ordenar(opcionParametro);
-					selection.ordenar(opcionParametro);
-					quick.ordenar(opcionParametro);
-					merge.ordenar(opcionParametro);
-					
-					JOptionPane.showMessageDialog(null, "Banco ordenado exitosamente con todos los algoritmos!");
-					
 					lblNumIntercambiosBurbuja.setText(String.valueOf(burbuja.getIntercambios()));
 					lblNumComparacionesBurbuja.setText(String.valueOf(burbuja.getComparaciones()));
-					lblTiempoEjecBurbuja.setText(String.valueOf(burbuja.getTiempoCpuMs()));
-					lblTiempoParedBurbuja.setText(String.valueOf(burbuja.getTiempoMs()));
+					lblTiempoEjecBurbuja.setText(String.valueOf(burbuja.getTiempoCpuMs()) + " ms");
+					lblTiempoParedBurbuja.setText(String.valueOf(burbuja.getTiempoMs()) + " ms");
 					
+					insercion.ordenar(opcionParametro);
+				
+					lblNumIntercambiosInsercion.setText(String.valueOf(insercion.getIntercambios()));
+					lblNumComparacionesInsercion.setText(String.valueOf(insercion.getComparaciones()));
+					lblTiempoEjecInsercion.setText(String.valueOf(insercion.getTiempoCpuMs()) + " ms");
+					lblTiempoParedInsercion.setText(String.valueOf(insercion.getTiempoMs()) + " ms");
+					
+					selection.ordenar(opcionParametro);
 					lblNumIntercambiosSeleccion.setText(String.valueOf(selection.getIntercambios()));
 					lblNumComparacionesSeleccion.setText(String.valueOf(selection.getComparaciones()));
-					lblTiempoEjecSeleccion.setText(String.valueOf(selection.getTiempoCpuMs()));
-					lblTiempoParedSeleccion.setText(String.valueOf(selection.getTiempoMs()));
+					lblTiempoEjecSeleccion.setText(String.valueOf(selection.getTiempoCpuMs()) + " ms");
+					lblTiempoParedSeleccion.setText(String.valueOf(selection.getTiempoMs()) + " ms");
 					
+					quick.ordenar(opcionParametro);
 					lblNumIntercambiosQuick.setText(String.valueOf(quick.getIntercambios()));
 					lblNumComparacionesQuick.setText(String.valueOf(quick.getComparaciones()));
-					lblTiempoEjecQuick.setText(String.valueOf(quick.getTiempoCpuMs()));
-					lblTiempoParedQuick.setText(String.valueOf(quick.getTiempoMs()));
+					lblTiempoEjecQuick.setText(String.valueOf(quick.getTiempoCpuMs()) + " ms");
+					lblTiempoParedQuick.setText(String.valueOf(quick.getTiempoMs()) + " ms");
 					
+					merge.ordenar(opcionParametro);
 					lblNumIntercambiosMerge.setText(String.valueOf(merge.getIntercambios()));
 					lblNumComparacionesMerge.setText(String.valueOf(merge.getComparaciones()));
-					lblTiempoEjecMerge.setText(String.valueOf(merge.getTiempoCpuMs()));
-					lblTiempoParedMerge.setText(String.valueOf(merge.getTiempoMs()));
-					
+					lblTiempoEjecMerge.setText(String.valueOf(merge.getTiempoCpuMs()) + " ms");
+					lblTiempoParedMerge.setText(String.valueOf(merge.getTiempoMs()) + " ms");
+
+					lblMostrarCandidatoElecto.setText(banco.buscar(0).toString());
+
+					JOptionPane.showMessageDialog(null, "Banco ordenado exitosamente con todos los algoritmos!");
 				}
 				catch(Exception exception)
 				{
 					JOptionPane.showMessageDialog(null, exception.getMessage());
 					exception.printStackTrace();
 				}
+				
 			}
 		});
 		btnGenerar.setBounds(776, 163, 89, 60);

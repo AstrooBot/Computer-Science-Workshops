@@ -21,13 +21,13 @@ public class Generador {
     private long semilla; 
     private Random random;
     private String[] filepaths = {
-        "co/edu/udistrital/resources/nombres.txt",
-        "co/edu/udistrital/resources/apellidos.txt",
-        "co/edu/udistrital/resources/clases.txt",
-        "co/edu/udistrital/resources/direcciones.txt",
-        "co/edu/udistrital/resources/partidos.txt",
-        "co/edu/udistrital/resources/sindicatos.txt",
-        "co/edu/udistrital/resources/entidades.txt"
+        "src/co/edu/udistrital/resources/nombres.txt",
+        "src/co/edu/udistrital/resources/apellidos.txt",
+        "src/co/edu/udistrital/resources/clases.txt",
+        "src/co/edu/udistrital/resources/direcciones.txt",
+        "src/co/edu/udistrital/resources/partidos.txt",
+        "src/co/edu/udistrital/resources/sindicatos.txt",
+        "src/co/edu/udistrital/resources/entidades.txt"
     };
     public String[] nombres = new String[101];
     public String[] apellidos = new String[101];
@@ -147,11 +147,11 @@ public class Generador {
         return new Candidato(
             this.generarNombre(),
             this.generarPartido(),
-            this.generarMarchas(random.nextInt(cantidad)),
-            this.generarClases(random.nextInt(cantidad)),
-            this.generarSobornos(random.nextInt(cantidad)),
-            this.generarActosCorrupcion(random.nextInt(cantidad)),
-            this.generarPrebendas(random.nextInt(cantidad))
+            this.generarMarchas(1 + random.nextInt(cantidad)),
+            this.generarClases(1 + random.nextInt(cantidad)),
+            this.generarSobornos(1 + random.nextInt(cantidad)),
+            this.generarActosCorrupcion(1 + random.nextInt(cantidad)),
+            this.generarPrebendas(1 + random.nextInt(cantidad))
         );
 
     }
@@ -217,6 +217,11 @@ public class Generador {
 
     public Candidato seleccionarCandidato(Banco banco) {
         return banco.buscar(0);
+    }
+
+    public static void main(String[] args) {
+        Generador generador = new Generador(10, 1234);
+        Banco banco = generador.generarBanco(10);
     }
 
 }

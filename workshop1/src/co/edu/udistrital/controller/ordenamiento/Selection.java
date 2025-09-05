@@ -53,6 +53,8 @@ public class Selection extends IOrdenador {
         tiempoMs = 0;
         tiempoCpuMs = 0;
 
+        this.elementos = this.banco.getAtributos(atributo);
+
         long inicioWall = System.nanoTime();
         long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
     	
@@ -76,6 +78,7 @@ public class Selection extends IOrdenador {
             if (minIndex != i) 
             {
                 intercambiar(i, minIndex);
+                this.setIntercambios(this.getIntercambios() + 1);
             }
         }
         

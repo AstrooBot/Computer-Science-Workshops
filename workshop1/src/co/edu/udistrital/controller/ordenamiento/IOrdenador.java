@@ -36,15 +36,21 @@ public abstract class IOrdenador {
         int acumTamano = 0;
 
         for(int i = 0; i < this.banco.getOcupados(); i++) {
-            acumTamano += (int) this.banco.buscar(i).getAtributos(atributo).length;
+            long[] candidatoAtributos = this.banco.buscar(i).getAtributos(atributo);
+            if (candidatoAtributos != null) {
+                acumTamano += candidatoAtributos.length;
+            }
         } 
 
         long[] acum = new long[acumTamano];
         int pos = 0;
         for (int i = 0; i < this.banco.getOcupados(); i++) {
             Candidato candidato = this.banco.buscar(i);
-            System.arraycopy(candidato.getAtributos(atributo), 0 , acum, pos, candidato.getAtributos(atributo).length);
-            pos += candidato.getAtributos(atributo).length;
+            long[] candidatoAtributos = candidato.getAtributos(atributo);
+            if (candidatoAtributos != null && candidatoAtributos.length > 0) {
+                System.arraycopy(candidatoAtributos, 0 , acum, pos, candidatoAtributos.length);
+                pos += candidatoAtributos.length;
+            }
         }
         return acum;
     }
@@ -68,7 +74,7 @@ public abstract class IOrdenador {
 		return intercambios;
 	}
 
-	public void setIntercambios(int intercambios) {
+	public void setIntercambios(long intercambios) {
 		this.intercambios = intercambios;
 	}
 

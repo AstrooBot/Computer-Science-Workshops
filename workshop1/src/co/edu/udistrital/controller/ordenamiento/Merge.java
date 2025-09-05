@@ -51,6 +51,8 @@ public class Merge extends IOrdenador {
         tiempoMs = 0;
         tiempoCpuMs = 0;
         
+        this.elementos = this.banco.getAtributos(atributo);
+        
         long inicioWall = System.nanoTime();
         long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
 

@@ -42,12 +42,13 @@ public class Quick extends IOrdenador {
     {
         comparaciones = 0;
         intercambios = 0;
+        tiempoMs = 0;
+        tiempoCpuMs = 0;
+        
+        this.elementos = this.banco.getAtributos(atributo);
         
         long inicioWall = System.nanoTime();
         long inicioCpu = threadMXBean.getCurrentThreadCpuTime();
-
-        //Inicializar el arreglo con los atributos a ordenar
-        this.elementos = getAtributos(atributo);
 
         quickSort(0, this.elementos.length - 1);
         
