@@ -1,6 +1,6 @@
-package co.edu.distrital.model.Fabrica;
+package model.Fabrica;
 
-import co.edu.distrital.model.Dato.Prebenda;
+import model.Dato.Prebenda;
 
 public class FabricaPrebenda extends Fabrica {
 

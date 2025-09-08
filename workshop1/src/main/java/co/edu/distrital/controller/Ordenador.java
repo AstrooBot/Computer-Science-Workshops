@@ -1,11 +1,7 @@
-package co.edu.distrital.controller;
+package controller;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import co.edu.distrital.model.Almacen;
-import co.edu.distrital.model.Candidato.Candidato;
+import model.Almacen;
+import model.Candidato.Candidato;
 
 public abstract class Ordenador {
 
@@ -32,7 +28,7 @@ public abstract class Ordenador {
         this.tiempoPared = 0;
     }
 
-    public int getComparaciones() {
+    public long getComparaciones() {
         return comparaciones;
     }
 
@@ -40,7 +36,7 @@ public abstract class Ordenador {
         this.comparaciones++;
     }
 
-    public int getIntercambios() {
+    public long getIntercambios() {
         return intercambios;
     }
 

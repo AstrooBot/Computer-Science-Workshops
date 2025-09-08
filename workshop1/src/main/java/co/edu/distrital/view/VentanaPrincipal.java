@@ -6,13 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controller.Generador;
-import controller.ordenamiento.Burbuja;
-import controller.ordenamiento.Insercion;
-import controller.ordenamiento.Merge;
-import controller.ordenamiento.Quick;
-import controller.ordenamiento.Selection;
-import model.Banco;
+import controller.Burbuja;
+import controller.Insercion;
+import controller.Merge;
+import controller.Quick;
+import controller.Reporte;
+import controller.Selection;
+import model.Almacen;
 
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
@@ -31,7 +31,7 @@ public class VentanaPrincipal {
 	
 	// Variables de control
 	private int cantCandidatos;
-	private Banco banco;
+	public Almacen almacen;
 	
 	// Algoritmos de ordenamiento
 	private Burbuja burbuja;
@@ -299,26 +299,18 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try
-				{
+				{	long tiempoEjecucion = System.nanoTime();
 					cantCandidatos = Integer.parseInt(textFieldCantidadCandidatos.getText());
 
 					String opcionOrdenamiento = "";
 					String opcionParametro = "";
-					
-					/*while(cantCandidatos < 1000000 )
-					{	
-						cantCandidatos = Integer.parseInt(JOptionPane.showInputDialog("El numero de candidatos debe ser mayor a 10000000"));
-					} */
+
 					textFieldCantidadCandidatos.setText(String.valueOf(cantCandidatos));
-					//TODO: <jndiazs@udistrital.edu.co>
+					
 					long semilla = Long.parseLong(textFieldSemilla.getText());
 					textFieldSemilla.setText(String.valueOf(semilla));
-					Generador generador = new Generador(cantCandidatos, semilla);
-					
-
-					banco = generador.generarBanco(5);
-					
-					
+					almacen = new Almacen((int) semilla, (int) cantCandidatos);
+										
 					ButtonModel seleccionadoOrden = opcionesOrdenamiento.getSelection();
 					if(seleccionadoOrden == rdbtnOpcionAleatoriaUniforme.getModel())
 					{
@@ -340,28 +332,28 @@ public class VentanaPrincipal {
 					ButtonModel seleccionadoParametro = opcionesParametros.getSelection();
 					if(seleccionadoParametro == rdbtnDistMarchas.getModel())
 					{
-						opcionParametro = "distancia marchas";
-						generador.prepararDatos(banco, banco.getAtributos("marchas"), opcionOrdenamiento);
+						opcionParametro = "marcha";
+						almacen.prepararDatos(almacen.getDatos("marcha"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnHorasClase.getModel())
 					{
-						opcionParametro = "horas perdidas";
-						generador.prepararDatos(banco, banco.getAtributos("clases"), opcionOrdenamiento);
+						opcionParametro = "clase";
+						almacen.prepararDatos(almacen.getDatos("clase"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnPrebSindicales.getModel())
 					{
-						opcionParametro = "prebendas sindicales";
-						generador.prepararDatos(banco, banco.getAtributos("prebendas"), opcionOrdenamiento);
+						opcionParametro = "prebenda";
+						almacen.prepararDatos(almacen.getDatos("prebenda"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnSobornos.getModel())
 					{
-						opcionParametro = "sobornos";
-						generador.prepararDatos(banco, banco.getAtributos("sobornos"), opcionOrdenamiento);
+						opcionParametro = "soborno";
+						almacen.prepararDatos(almacen.getDatos("soborno"), opcionOrdenamiento);
 					}
 					else if(seleccionadoParametro == rdbtnActosCorrup.getModel())
 					{
-						opcionParametro = "actos corruptos";
-						generador.prepararDatos(banco, banco.getAtributos("actoscorrupcion"), opcionOrdenamiento);
+						opcionParametro = "actoCorrupcion";
+						almacen.prepararDatos(almacen.getDatos("actoCorrupcion"), opcionOrdenamiento);
 					}
 					else
 					{
@@ -373,46 +365,64 @@ public class VentanaPrincipal {
 					System.out.println(opcionParametro);
 					
 
-					burbuja = new Burbuja(banco);
-					insercion = new Insercion(banco);
-					selection = new Selection(banco);
-					quick = new Quick(banco);
-					merge = new Merge(banco);
+					burbuja = new Burbuja(almacen, opcionParametro);
+					insercion = new Insercion(almacen, opcionParametro);
+					selection = new Selection(almacen, opcionParametro);
+					quick = new Quick(almacen, opcionParametro);
+					merge = new Merge(almacen, opcionParametro);
 					
-					burbuja.ordenar(opcionParametro);
+					burbuja.ordenar();
+					long finBurbuja = System.nanoTime();
+        			long duracionBurbuja = finBurbuja - tiempoEjecucion;
 					lblNumIntercambiosBurbuja.setText(String.valueOf(burbuja.getIntercambios()));
 					lblNumComparacionesBurbuja.setText(String.valueOf(burbuja.getComparaciones()));
-					lblTiempoEjecBurbuja.setText(String.valueOf(burbuja.getTiempoCpuMs()) + " ms");
+					lblTiempoEjecBurbuja.setText(String.valueOf(duracionBurbuja) + " ms");
 					lblTiempoParedBurbuja.setText(String.valueOf(burbuja.getTiempoMs()) + " ms");
 					
-					insercion.ordenar(opcionParametro);
-				
+					insercion.ordenar();
+					long finInsercion = System.nanoTime();
+        			long duracionInsercion = finInsercion - tiempoEjecucion;
 					lblNumIntercambiosInsercion.setText(String.valueOf(insercion.getIntercambios()));
 					lblNumComparacionesInsercion.setText(String.valueOf(insercion.getComparaciones()));
-					lblTiempoEjecInsercion.setText(String.valueOf(insercion.getTiempoCpuMs()) + " ms");
+					lblTiempoEjecInsercion.setText(String.valueOf(duracionInsercion) + " ms");
 					lblTiempoParedInsercion.setText(String.valueOf(insercion.getTiempoMs()) + " ms");
 					
-					selection.ordenar(opcionParametro);
+					selection.ordenar();
+					long finSelection = System.nanoTime();
+        			long duracionSelection = finSelection - tiempoEjecucion;
 					lblNumIntercambiosSeleccion.setText(String.valueOf(selection.getIntercambios()));
 					lblNumComparacionesSeleccion.setText(String.valueOf(selection.getComparaciones()));
-					lblTiempoEjecSeleccion.setText(String.valueOf(selection.getTiempoCpuMs()) + " ms");
+					lblTiempoEjecSeleccion.setText(String.valueOf(duracionSelection) + " ms");
 					lblTiempoParedSeleccion.setText(String.valueOf(selection.getTiempoMs()) + " ms");
 					
-					quick.ordenar(opcionParametro);
+					quick.ordenar();
+					long finQuick = System.nanoTime();
+        			long duracionQuick = finQuick - tiempoEjecucion;
 					lblNumIntercambiosQuick.setText(String.valueOf(quick.getIntercambios()));
 					lblNumComparacionesQuick.setText(String.valueOf(quick.getComparaciones()));
-					lblTiempoEjecQuick.setText(String.valueOf(quick.getTiempoCpuMs()) + " ms");
+					lblTiempoEjecQuick.setText(String.valueOf(duracionQuick) + " ms");
 					lblTiempoParedQuick.setText(String.valueOf(quick.getTiempoMs()) + " ms");
 					
-					merge.ordenar(opcionParametro);
+					merge.ordenar();
+					long finMerge = System.nanoTime();
+					long duracionMerge = finMerge - tiempoEjecucion;
 					lblNumIntercambiosMerge.setText(String.valueOf(merge.getIntercambios()));
 					lblNumComparacionesMerge.setText(String.valueOf(merge.getComparaciones()));
-					lblTiempoEjecMerge.setText(String.valueOf(merge.getTiempoCpuMs()) + " ms");
+					lblTiempoEjecMerge.setText(String.valueOf(duracionMerge) + " ms");
 					lblTiempoParedMerge.setText(String.valueOf(merge.getTiempoMs()) + " ms");
 
-					lblMostrarCandidatoElecto.setText(banco.buscar(0).toString());
+					lblMostrarCandidatoElecto.setText(merge.best().getNombre() + ", " + merge.best().getPartido());
 
-					JOptionPane.showMessageDialog(null, "Banco ordenado exitosamente con todos los algoritmos!");
+					JOptionPane.showMessageDialog(null, "¡Almacen ordenado exitosamente con todos los algoritmos!");
+					Reporte reporte = new Reporte(
+				            new String[]{"Burbuja", "Inserción", "Merge", "Quick", "Selección"},
+				            new long[]{burbuja.getComparaciones(), insercion.getComparaciones(), merge.getComparaciones(), quick.getComparaciones(), selection.getComparaciones()},
+				            new long[]{burbuja.getIntercambios(), insercion.getIntercambios(), merge.getIntercambios(), quick.getIntercambios(), selection.getIntercambios()},
+				            new double[]{burbuja.getTiempoPared(), insercion.getTiempoPared(), merge.getTiempoPared(), quick.getTiempoPared(), selection.getTiempoPared()},
+				            new String[]{burbuja.best().toString(), insercion.best().toString(), merge.best().toString(), quick.best().toString(), selection.best().toString()}
+				        );
+					reporte.generateCSV();
+					JOptionPane.showMessageDialog(null, "Se ha generado exitosamente el reporte en el archivo report.csv");
 				}
 				catch(Exception exception)
 				{

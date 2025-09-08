@@ -1,7 +1,7 @@
-package co.edu.distrital.model.Fabrica;
+package model.Fabrica;
 
-import co.edu.distrital.model.BaseDatos;
-import co.edu.distrital.model.Dato.Idato;
+import model.BaseDatos;
+import model.Dato.Idato;
 
 public abstract class Fabrica {
     private int semilla;

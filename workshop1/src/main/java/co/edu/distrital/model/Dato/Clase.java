@@ -1,4 +1,4 @@
-package co.edu.distrital.model.Dato;
+package model.Dato;
 
 public class Clase implements Idato {
 

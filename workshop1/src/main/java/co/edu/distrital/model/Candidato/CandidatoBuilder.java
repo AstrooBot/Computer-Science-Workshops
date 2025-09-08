@@ -1,7 +1,7 @@
-package co.edu.distrital.model.Candidato;
+package model.Candidato;
 
-import co.edu.distrital.model.BaseDatos;
-import co.edu.distrital.model.Fabrica.*;
+import model.BaseDatos;
+import model.Fabrica.*;
 
 public class CandidatoBuilder {
 

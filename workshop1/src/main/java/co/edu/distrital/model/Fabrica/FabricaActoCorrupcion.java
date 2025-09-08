@@ -1,12 +1,11 @@
-package co.edu.distrital.model.Fabrica;
+package model.Fabrica;
 
-import co.edu.distrital.model.Dato.ActoCorrupcion;
+import model.Dato.ActoCorrupcion;
 
 public class FabricaActoCorrupcion extends Fabrica {
 
     public FabricaActoCorrupcion(int semilla) {
         super(semilla);
-        //TODO Auto-generated constructor stub
     }
 
     @Override

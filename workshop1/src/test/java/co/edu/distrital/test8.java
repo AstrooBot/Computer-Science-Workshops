@@ -1,7 +1,7 @@
 package co.edu.distrital;
 
-import co.edu.distrital.controller.*;
-import co.edu.distrital.model.Almacen;
+import controller.*;
+import model.Almacen;
 
 public class test8 {
     public static void main(String[] args) {
@@ -21,8 +21,8 @@ public class test8 {
 
         Reporte reporte = new Reporte(
             new String[]{"Burbuja", "Inserción", "Merge", "Quick", "Selección"},
-            new int[]{burbuja.getComparaciones(), insercion.getComparaciones(), merge.getComparaciones(), quick.getComparaciones(), seleccion.getComparaciones()},
-            new int[]{burbuja.getIntercambios(), insercion.getIntercambios(), merge.getIntercambios(), quick.getIntercambios(), seleccion.getIntercambios()},
+            new long[]{burbuja.getComparaciones(), insercion.getComparaciones(), merge.getComparaciones(), quick.getComparaciones(), seleccion.getComparaciones()},
+            new long[]{burbuja.getIntercambios(), insercion.getIntercambios(), merge.getIntercambios(), quick.getIntercambios(), seleccion.getIntercambios()},
             new double[]{burbuja.getTiempoPared(), insercion.getTiempoPared(), merge.getTiempoPared(), quick.getTiempoPared(), seleccion.getTiempoPared()},
             new String[]{burbuja.best().toString(), insercion.best().toString(), merge.best().toString(), quick.best().toString(), seleccion.best().toString()}
         );

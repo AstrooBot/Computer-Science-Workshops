@@ -1,12 +1,12 @@
-package co.edu.distrital.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import co.edu.distrital.model.Candidato.Candidato;
-import co.edu.distrital.model.Candidato.CandidatoBuilder;
+import model.Candidato.Candidato;
+import model.Candidato.CandidatoBuilder;
 
 public class Almacen {
 

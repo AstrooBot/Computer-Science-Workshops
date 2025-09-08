@@ -1,6 +1,6 @@
-package co.edu.distrital.controller;
+package controller;
 
-import co.edu.distrital.model.Almacen;
+import model.Almacen;
 
 public class Insercion extends Ordenador {
 

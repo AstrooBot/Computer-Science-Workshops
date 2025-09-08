@@ -1,4 +1,4 @@
-package co.edu.distrital.model;
+package model;
 
 import java.util.Random;
 

@@ -1,6 +1,6 @@
-package co.edu.distrital;
 
-import co.edu.distrital.controller.Controller;
+
+import controller.Controller;
 
 public class AplMain {
 

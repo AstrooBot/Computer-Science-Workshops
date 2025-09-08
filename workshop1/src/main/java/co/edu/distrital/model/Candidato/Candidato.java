@@ -1,6 +1,6 @@
-package co.edu.distrital.model.Candidato;
+package model.Candidato;
 
-import co.edu.distrital.model.Dato.*;
+import model.Dato.*;
 
 public class Candidato {
 

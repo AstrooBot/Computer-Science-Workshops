@@ -1,4 +1,4 @@
-package co.edu.distrital.controller;
+package controller;
 
 
 import java.awt.EventQueue;
