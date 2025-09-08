@@ -4,10 +4,24 @@ import model.Almacen;
 
 public class Merge extends Ordenador {
 
+    /**
+     * La clase Merge implementa el algoritmo de ordenamiento por mezcla (Merge Sort).
+     * Extiende la clase Ordenador y utiliza un almacén de datos y un atributo específico para ordenar.
+     * Este algoritmo es eficiente para listas grandes y desordenadas.
+     *
+     * @author Juan Esteban Galeano
+        */
     public Merge(Almacen almacen, String atributo) {
         super(almacen, atributo);
 
     }
+    /**
+     * Constructor de la clase Merge.
+     * Inicializa el objeto con el almacén y el atributo a ordenar.
+     *
+     * @param almacen  El almacén de datos a ordenar.
+     * @param atributo El atributo por el cual se realizará el ordenamiento.
+     */
    @Override
     public void ordenar() 
     {
@@ -89,7 +103,6 @@ public class Merge extends Ordenador {
             this.datos[k] = izquierda[i];
             i++;
             k++;
-            this.setIntercambios();  
         }
 
         // Copiar los elementos restantes de derecha[]
@@ -97,8 +110,7 @@ public class Merge extends Ordenador {
         {
             this.datos[k] = derecha[j];
             j++;
-            k++;
-            this.setIntercambios(); 
+            k++; 
         }
 
         // Actualizar el banco según el nuevo orden

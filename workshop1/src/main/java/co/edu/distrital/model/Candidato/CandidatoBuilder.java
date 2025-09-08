@@ -3,6 +3,16 @@ package model.Candidato;
 import model.BaseDatos;
 import model.Fabrica.*;
 
+/**
+ * CandidatoBuilder es una clase que facilita la creación de objetos {@link Candidato}
+ * utilizando diferentes fábricas y una base de datos simulada. Permite generar candidatos
+ * con atributos aleatorios o determinados por una semilla, asegurando reproducibilidad.
+ * 
+ * <p>Utiliza varias fábricas para crear los diferentes atributos de un candidato, como
+ * actos de corrupción, prebendas, clases sociales, marchas y sobornos.</p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class CandidatoBuilder {
 
     private BaseDatos baseDatos;

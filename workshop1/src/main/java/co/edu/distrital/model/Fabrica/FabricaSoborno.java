@@ -2,6 +2,12 @@ package model.Fabrica;
 
 import model.Dato.Soborno;
 
+/**
+ * La clase FabricaSoborno extiende la clase abstracta Fabrica y se encarga de crear arreglos de objetos Soborno.
+ * Utiliza una base de datos interna para generar los datos necesarios para cada instancia de Soborno.
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class FabricaSoborno extends Fabrica {
 
     public FabricaSoborno(int semilla) {

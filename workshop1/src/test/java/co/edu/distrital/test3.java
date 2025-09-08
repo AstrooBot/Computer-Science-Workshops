@@ -1,8 +1,28 @@
 package co.edu.distrital;
 
-import co.edu.distrital.model.Fabrica.*;
-import co.edu.distrital.model.Dato.*;
+import model.Fabrica.*;
+import model.Dato.*;
 
+/**
+ * Clase de prueba para la generación y prueba de diferentes tipos de datos usando fábricas.
+ * <p>
+ * Esta clase crea instancias de varias fábricas (FabricaMarcha, FabricaPrebenda, FabricaClase,
+ * FabricaActoCorrupcion, FabricaSoborno) utilizando una semilla fija para asegurar la reproducibilidad.
+ * Luego, genera una cantidad específica de objetos de cada tipo y los imprime en consola.
+ * </p>
+ * 
+ * <p>
+ * Las fábricas utilizadas deben implementar el método {@code crearDato(int cantidad)} que retorna
+ * un arreglo de objetos correspondientes a cada tipo de dato.
+ * </p>
+ * 
+ * <p>
+ * Este programa es útil para probar la correcta generación y representación de los objetos
+ * creados por cada fábrica.
+ * </p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class test3 {
 //Testing fabricas
     public static void main(String[] args) {

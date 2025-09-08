@@ -1,5 +1,16 @@
 package model.Dato;
 
+/**
+ * Representa una clase académica con un nombre, una carrera asociada y una cantidad.
+ * Implementa la interfaz {@code Idato}.
+ * 
+ * <p>
+ * Esta clase almacena información básica sobre una clase, incluyendo su nombre,
+ * la carrera a la que pertenece y una cantidad asociada (por ejemplo, número de estudiantes).
+ * </p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Clase implements Idato {
 
     private String nombre;

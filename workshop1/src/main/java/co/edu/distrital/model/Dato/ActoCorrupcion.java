@@ -1,5 +1,18 @@
 package model.Dato;
 
+/**
+ * Representa un acto de corrupción con información relevante como la fecha, el responsable y el lugar donde ocurrió.
+ * Implementa la interfaz {@code Idato}.
+ * 
+ * <p>
+ * Ejemplo de uso:
+ * <pre>
+ *     ActoCorrupcion acto = new ActoCorrupcion("2024-06-01", "Juan Perez", "Bogotá");
+ * </pre>
+ * </p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class ActoCorrupcion implements Idato {
 
     private String fecha;

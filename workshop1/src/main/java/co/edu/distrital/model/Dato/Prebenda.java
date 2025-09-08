@@ -1,5 +1,19 @@
 package model.Dato;
 
+/**
+ * La clase {@code Prebenda} representa una prebenda eclesiástica, que contiene información
+ * sobre el nombre de la iglesia, la renta asociada y el tipo de iglesia.
+ * Implementa la interfaz {@code Idato}.
+ * 
+ * <p>
+ * Ejemplo de uso:
+ * <pre>
+ *     Prebenda prebenda = new Prebenda("Catedral", 5000L, "Principal");
+ * </pre>
+ * </p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Prebenda implements Idato {
 
     private String nombreIglesia;

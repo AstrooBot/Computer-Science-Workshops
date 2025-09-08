@@ -2,6 +2,19 @@ package model.Fabrica;
 
 import model.Dato.ActoCorrupcion;
 
+/**
+ * La clase {@code FabricaActoCorrupcion} extiende la clase abstracta {@code Fabrica}
+ * y se encarga de crear instancias de {@code ActoCorrupcion}.
+ * Utiliza una semilla para inicializar la fábrica y genera un arreglo de actos de corrupción
+ * con datos obtenidos de la base de datos interna.
+ *
+ * <p>
+ * Cada acto de corrupción generado contiene una fecha, un nombre completo (nombre y apellido)
+ * y un lugar, todos obtenidos de la base de datos asociada a la fábrica.
+ * </p>
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class FabricaActoCorrupcion extends Fabrica {
 
     public FabricaActoCorrupcion(int semilla) {

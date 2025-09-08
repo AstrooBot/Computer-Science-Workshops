@@ -2,6 +2,19 @@ package controller;
 
 import model.Almacen;
 
+/**
+ * La clase {@code Selection} implementa el algoritmo de ordenamiento Selection Sort
+ * para ordenar los elementos almacenados en un {@link Almacen} según un atributo específico.
+ * Hereda de la clase {@code Ordenador} y sobreescribe el método {@code ordenar()} para
+ * realizar la ordenación, registrando el número de comparaciones, intercambios y el tiempo
+ * de ejecución.
+ *
+ * <p>El algoritmo Selection Sort recorre el arreglo buscando el elemento más pequeño
+ * en cada iteración y lo intercambia con el elemento en la posición actual, hasta que
+ * el arreglo esté completamente ordenado.</p>
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Selection extends Ordenador {
 
     public Selection(Almacen almacen, String atributo) {
@@ -37,13 +50,9 @@ public class Selection extends Ordenador {
             if (minIndex != i) 
             {
                 intercambiar(i, minIndex);
-                this.setIntercambios();
             }
         }
     this.setTiempoMs(this.getTiempoPared());    
 
-    }
-
-
-    
+    }  
 }

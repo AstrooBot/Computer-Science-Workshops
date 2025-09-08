@@ -4,6 +4,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Clase Reporte que permite generar un reporte en formato CSV con los resultados de ejecución
+ * de diferentes algoritmos, incluyendo el número de comparaciones, intercambios, tiempo de ejecución
+ * y el mejor candidato encontrado por cada algoritmo.
+ */
+ 
+    /**
+     * Genera un archivo CSV llamado "report.csv" con los datos de los algoritmos,
+     * incluyendo comparaciones, intercambios, tiempo de ejecución y mejor candidato.
+     * Si ocurre un error durante la creación del archivo, se muestra un mensaje por consola.
+     */
+     
+    /**
+     * Constructor de la clase Reporte.
+     * 
+     * @param algoritmos     Arreglo con los nombres de los algoritmos evaluados.
+     * @param comparaciones  Arreglo con el número de comparaciones realizadas por cada algoritmo.
+     * @param intercambios   Arreglo con el número de intercambios realizados por cada algoritmo.
+     * @param tiempoPared    Arreglo con el tiempo de ejecución (en milisegundos) de cada algoritmo.
+     * @param mejor          Arreglo con el mejor candidato encontrado por cada algoritmo.
+     * 
+     * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+     */
 public class Reporte {
     
     String[] algoritmos;

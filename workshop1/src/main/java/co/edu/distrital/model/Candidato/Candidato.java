@@ -2,6 +2,36 @@ package model.Candidato;
 
 import model.Dato.*;
 
+/**
+ * La clase Candidato representa un candidato político con información relevante
+ * como su identificador, nombre, partido político y diferentes tipos de datos
+ * asociados a su actividad (sobornos, actos de corrupción, prebendas, clases y marchas).
+ * 
+ * Proporciona métodos para acceder y modificar estos datos, así como para obtener
+ * representaciones en formato long de los montos asociados y una representación en
+ * cadena de texto de toda la información del candidato.
+ * 
+ * Atributos:
+ * - id: Identificador único del candidato.
+ * - nombre: Nombre del candidato.
+ * - partido: Partido político al que pertenece el candidato.
+ * - sobornos: Arreglo de objetos Soborno asociados al candidato.
+ * - actosCorrupcion: Arreglo de objetos ActoCorrupcion asociados al candidato.
+ * - prebendas: Arreglo de objetos Prebenda asociados al candidato.
+ * - clases: Arreglo de objetos Clase asociados al candidato.
+ * - marchas: Arreglo de objetos Marcha asociados al candidato.
+ * 
+ * Métodos principales:
+ * - Getters y setters para todos los atributos.
+ * - Métodos para obtener los valores long de los arreglos de datos.
+ * - Método para mostrar los datos en formato de texto.
+ * - Método toString() para obtener una representación completa del candidato.
+ * 
+ * Nota: Esta clase asume que las clases Soborno, ActoCorrupcion, Prebenda, Clase,
+ * Marcha e Idato están definidas en el sistema.
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Candidato {
 
     private int id;
@@ -42,11 +72,11 @@ public class Candidato {
     }
 
     public long getLongActosCorrupcion() {
-        long longSobornos = 0;
-        for (int i = 0; i < sobornos.length; i++) {
-            longSobornos += sobornos[i].getLong();
+        long longActos = 0;
+        for (int i = 0; i < actosCorrupcion.length; i++) {
+            longActos += actosCorrupcion[i].getLong();
         }
-        return longSobornos;
+        return longActos;
     }
     public ActoCorrupcion[] getActosCorrupcion() {
         return actosCorrupcion;

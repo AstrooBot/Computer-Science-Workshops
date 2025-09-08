@@ -1,5 +1,15 @@
 package model.Dato;
 
+/**
+ * La clase {@code Soborno} representa un dato de soborno con información relevante
+ * como la fecha, la cantidad y el responsable del soborno.
+ * Implementa la interfaz {@code Idato}.
+ *
+ * <p>Proporciona métodos para obtener y establecer los valores de sus atributos,
+ * así como un método para obtener una representación en cadena del objeto.</p>
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Soborno implements Idato {
 
     private String fecha;

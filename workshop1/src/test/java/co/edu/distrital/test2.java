@@ -1,8 +1,35 @@
 package co.edu.distrital;
 
-import co.edu.distrital.model.BaseDatos;
+import model.BaseDatos;
 
 //Testing BaseDatos class
+/**
+ * Clase de prueba para la clase BaseDatos.
+ * <p>
+ * Esta clase contiene el método main que prueba la funcionalidad de la clase BaseDatos,
+ * obteniendo dos instancias (bd y bd2) mediante el método getInstance con diferentes parámetros.
+ * Luego imprime en consola los valores de varios atributos obtenidos a través de métodos getters.
+ * </p>
+ *
+ * <p>
+ * Métodos utilizados de BaseDatos:
+ * <ul>
+ *   <li>getNombre()</li>
+ *   <li>getApellido()</li>
+ *   <li>getLugar()</li>
+ *   <li>getPartido()</li>
+ *   <li>getNombreIglesia()</li>
+ *   <li>getNombreClase()</li>
+ *   <li>getNombreMarcha()</li>
+ *   <li>getEntidad()</li>
+ *   <li>getTipoIglesia()</li>
+ *   <li>getCarrera()</li>
+ *   <li>getFecha() (solo para bd2)</li>
+ * </ul>
+ * </p>
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class test2 {
 
     public static void main(String[] args) {

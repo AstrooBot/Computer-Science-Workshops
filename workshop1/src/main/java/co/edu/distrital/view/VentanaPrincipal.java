@@ -19,6 +19,25 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * VentanaPrincipal es la clase principal de la interfaz gráfica de usuario (GUI) para la aplicación de ordenamiento de candidatos.
+ * Permite al usuario generar una lista de candidatos con diferentes parámetros y ordenamientos, aplicar varios algoritmos de ordenamiento,
+ * y visualizar el desempeño de cada algoritmo en términos de tiempo de ejecución, número de comparaciones e intercambios.
+ * 
+ * <p>Características principales:</p>
+ * <ul>
+ *   <li>Permite seleccionar la cantidad de candidatos y la semilla para la generación de datos.</li>
+ *   <li>Ofrece opciones para el tipo de orden inicial de los datos (aleatorio, casi ordenado, orden inverso).</li>
+ *   <li>Permite elegir el atributo por el cual se ordenarán los candidatos.</li>
+ *   <li>Ejecuta y compara los algoritmos de Burbuja, Inserción, Selección, QuickSort y MergeSort.</li>
+ *   <li>Muestra métricas de desempeño para cada algoritmo (tiempo, comparaciones, intercambios).</li>
+ *   <li>Permite limpiar la interfaz y generar reportes en formato CSV.</li>
+ * </ul>
+ * 
+ * <p>Esta clase utiliza componentes de Swing para la construcción de la interfaz y gestiona la interacción del usuario con los algoritmos de ordenamiento.</p>
+ * 
+ * @author Juan Esteban Galeano
+ */
 public class VentanaPrincipal {
 
 	// Componentes de la interfaz
@@ -419,7 +438,7 @@ public class VentanaPrincipal {
 				            new long[]{burbuja.getComparaciones(), insercion.getComparaciones(), merge.getComparaciones(), quick.getComparaciones(), selection.getComparaciones()},
 				            new long[]{burbuja.getIntercambios(), insercion.getIntercambios(), merge.getIntercambios(), quick.getIntercambios(), selection.getIntercambios()},
 				            new double[]{burbuja.getTiempoPared(), insercion.getTiempoPared(), merge.getTiempoPared(), quick.getTiempoPared(), selection.getTiempoPared()},
-				            new String[]{burbuja.best().toString(), insercion.best().toString(), merge.best().toString(), quick.best().toString(), selection.best().toString()}
+				            new String[]{Integer.toString(burbuja.best().getId()), Integer.toString(insercion.best().getId()),Integer.toString(merge.best().getId()),Integer.toString(quick.best().getId()),Integer.toString(selection.best().getId())}
 				        );
 					reporte.generateCSV();
 					JOptionPane.showMessageDialog(null, "Se ha generado exitosamente el reporte en el archivo report.csv");

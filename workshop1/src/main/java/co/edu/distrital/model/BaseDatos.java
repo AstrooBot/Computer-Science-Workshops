@@ -3,6 +3,34 @@ package model;
 import java.util.Random;
 
 
+/**
+ * La clase {@code BaseDatos} es un singleton que proporciona métodos para obtener datos aleatorios
+ * de diferentes categorías, como nombres, apellidos, lugares, partidos políticos, iglesias, clases,
+ * marchas, entidades bancarias, tipos de iglesias y carreras universitarias. 
+ * 
+ * Utiliza una semilla para inicializar el generador de números aleatorios, permitiendo así la 
+ * reproducibilidad de los datos generados.
+ * 
+ * <p>Principales funcionalidades:</p>
+ * <ul>
+ *   <li>Obtener nombres y apellidos aleatorios.</li>
+ *   <li>Obtener direcciones, partidos políticos, nombres de iglesias, clases, marchas, entidades bancarias, tipos de iglesias y carreras aleatorias.</li>
+ *   <li>Generar fechas aleatorias en formato "yyyy-MM-dd".</li>
+ *   <li>Generar números enteros y largos aleatorios dentro de un rango específico.</li>
+ * </ul>
+ * 
+ * <p>Uso típico:</p>
+ * <pre>
+ *   BaseDatos bd = BaseDatos.getInstance(1234);
+ *   String nombre = bd.getNombre();
+ *   String apellido = bd.getApellido();
+ *   String fecha = bd.getFecha();
+ * </pre>
+ * 
+ * <p>Esta clase es útil para la generación de datos de prueba o simulaciones.</p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class BaseDatos {
 
     private static BaseDatos instance = null;

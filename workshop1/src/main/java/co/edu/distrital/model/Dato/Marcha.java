@@ -1,5 +1,16 @@
 package model.Dato;
 
+/**
+ * Representa una marcha con un nombre, distancia y fecha.
+ * Implementa la interfaz {@link Idato}.
+ * 
+ * <p>
+ * Esta clase almacena la información básica de una marcha, incluyendo su nombre,
+ * la distancia recorrida y la fecha en la que se realizó.
+ * </p>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Marcha implements Idato {
 
     private String nombre;

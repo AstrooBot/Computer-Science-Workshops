@@ -1,3 +1,13 @@
+/**
+ * Implementa el algoritmo de ordenamiento QuickSort para ordenar los datos almacenados en un objeto {@link Almacen}
+ * según un atributo específico.
+ * <p>
+ * Esta clase extiende de {@link Ordenador} y redefine el método {@code ordenar()} para aplicar el algoritmo QuickSort.
+ * Utiliza el esquema de partición de Lomuto para dividir y ordenar el arreglo de datos.
+ * </p>
+ *
+ * @author Juan Esteban Galeano
+ */
 package controller;
 
 import model.Almacen;
@@ -49,6 +59,7 @@ public class Quick extends Ordenador {
         }
 
         intercambiar(i + 1, high);
+        this.intercambios -= 1;
         return i + 1;
     }
 

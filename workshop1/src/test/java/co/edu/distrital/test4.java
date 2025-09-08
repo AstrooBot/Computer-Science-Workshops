@@ -1,18 +1,36 @@
 package co.edu.distrital;
 
-import co.edu.distrital.model.Candidato.Candidato;
-import co.edu.distrital.model.Dato.ActoCorrupcion;
-import co.edu.distrital.model.Dato.Clase;
-import co.edu.distrital.model.Dato.Marcha;
-import co.edu.distrital.model.Dato.Prebenda;
-import co.edu.distrital.model.Dato.Soborno;
-import co.edu.distrital.model.Fabrica.FabricaActoCorrupcion;
-import co.edu.distrital.model.Fabrica.FabricaClase;
-import co.edu.distrital.model.Fabrica.FabricaMarcha;
-import co.edu.distrital.model.Fabrica.FabricaPrebenda;
-import co.edu.distrital.model.Fabrica.FabricaSoborno;
+import model.Candidato.Candidato;
+import model.Dato.ActoCorrupcion;
+import model.Dato.Clase;
+import model.Dato.Marcha;
+import model.Dato.Prebenda;
+import model.Dato.Soborno;
+import model.Fabrica.FabricaActoCorrupcion;
+import model.Fabrica.FabricaClase;
+import model.Fabrica.FabricaMarcha;
+import model.Fabrica.FabricaPrebenda;
+import model.Fabrica.FabricaSoborno;
 
 //Testing candidato class
+/**
+ * Clase de prueba para la creación y prueba de un objeto {@link Candidato} utilizando diferentes fábricas de datos.
+ * <p>
+ * Este programa genera instancias de {@link Marcha}, {@link Prebenda}, {@link Clase}, {@link ActoCorrupcion} y {@link Soborno}
+ * utilizando semillas y cantidades definidas, y luego crea un {@link Candidato} con estos datos.
+ * </p>
+ *
+ * <p>
+ * Uso principal:
+ * <ul>
+ *   <li>Inicializa las fábricas con una semilla específica para obtener datos reproducibles.</li>
+ *   <li>Crea arreglos de objetos de cada tipo usando las fábricas.</li>
+ *   <li>Construye un {@link Candidato} con los datos generados y lo imprime por consola.</li>
+ * </ul>
+ * </p>
+ *
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class test4 {
 
     public static void main(String[] args) {

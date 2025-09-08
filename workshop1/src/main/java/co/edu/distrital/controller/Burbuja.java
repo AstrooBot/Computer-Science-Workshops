@@ -3,11 +3,24 @@ package controller;
 import model.Almacen;
 
 public class Burbuja extends Ordenador {
-
+	/**
+	 * La clase Insercion implementa el algoritmo de ordenamiento por burbuja.
+	 * Extiende la clase Ordenador y utiliza un almacén de datos y un atributo específico para ordenar.
+	 * Este algoritmo es eficiente para listas pequeñas y casi ordenadas.
+	 *
+	 * @author Nicolas Diaz Salamanca <jndiasz@udistrital.edu.co>
+	 */
     public Burbuja(Almacen almacen, String atributo) {
         super(almacen, atributo);
 
     }
+    /**
+     * Constructor de la clase burbuja.
+     * Inicializa el objeto con el almacén y el atributo a ordenar.
+     *
+     * @param almacen  El almacén de datos a ordenar.
+     * @param atributo El atributo por el cual se realizará el ordenamiento.
+     */
 
     @Override
     public void ordenar() 

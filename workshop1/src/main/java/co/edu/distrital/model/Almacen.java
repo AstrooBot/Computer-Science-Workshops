@@ -8,6 +8,26 @@ import java.util.Random;
 import model.Candidato.Candidato;
 import model.Candidato.CandidatoBuilder;
 
+/**
+ * La clase {@code Almacen} representa un almacén de candidatos, permitiendo su generación,
+ * manipulación y obtención de datos asociados a cada candidato.
+ * 
+ * <p>Provee métodos para acceder a candidatos por posición o ID, obtener diferentes tipos de datos
+ * relacionados con los candidatos, y preparar los datos en diferentes modos de ordenamiento.
+ * 
+ * <p>Utiliza un {@code CandidatoBuilder} para la creación de los candidatos y mantiene la
+ * reproducibilidad mediante el uso de una semilla para la generación aleatoria.
+ * 
+ * <ul>
+ *   <li>{@link #getById(int)}: Obtiene un candidato por su ID.</li>
+ *   <li>{@link #getCandidato(int)}: Obtiene un candidato por su posición en el arreglo.</li>
+ *   <li>{@link #getDatos(String)}: Obtiene datos específicos de los candidatos según el tipo solicitado.</li>
+ *   <li>{@link #mover(int, int)}: Intercambia dos candidatos en posiciones dadas.</li>
+ *   <li>{@link #prepararDatos(long[], String)}: Prepara un arreglo de datos en diferentes modos de ordenamiento.</li>
+ * </ul>
+ * 
+ * @author Nicolas Diaz Salamanca <jndiazs@udistrital.edu.co>
+ */
 public class Almacen {
 
     private CandidatoBuilder candidatoBuilder;
@@ -65,7 +85,7 @@ public class Almacen {
                 for (int i = 0; i < candidatos.length; i++){datos[i] = this.getCandidato(i).getLongSobornos();}
                 datos1d = this.reduce2Dto1D(datos);
                 break;
-            case"actoCorrupcion":
+            case"actocorrupcion":
                 datos1d = new long[candidatos.length];
                 for (int i = 0; i < candidatos.length; i++) {datos1d[i] = this.getCandidato(i).getLongActosCorrupcion();}
                 break;
