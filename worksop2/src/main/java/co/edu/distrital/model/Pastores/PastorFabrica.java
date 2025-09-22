@@ -7,7 +7,7 @@ public class PastorFabrica {
     private int semilla;
     private String[] nombresDeCuras = {"Padre Juan", "Padre José", "Padre Francisco", "Padre Antonio", "Padre Carlos", "Padre Luis",
             "Padre Pedro", "Padre Miguel", "Padre Rafael", "Padre Andrés", "Padre Tomás", "Padre Esteban", "Padre Mateo", "Padre Gabriel", "Padre Ignacio"};
-    private String[] oficios = {"Confesor", "Predicador", "Misionero", "Sacerdote", "Monje", "Obispo", "Cura Párroco", "Capellán", "Teólogo", "Liturgista"};
+    private String[] oficios = {"Confesor", "Predicador", "Apostador", "Sacerdote", "Monje", "Obispo", "Vendedor de humo", "Guerillero", "Teólogo", "Liturgista"};
     private Random random;
 
     public PastorFabrica(int semilla) {
@@ -15,7 +15,6 @@ public class PastorFabrica {
         this.random = new Random(this.semilla);
     }
 
-    //TODO: hacer metodo para hacer pastores en masa
     public Pastor crearPastor(int id) {
         String nombre = nombresDeCuras[random.nextInt(nombresDeCuras.length)];
         int doblones = getInt(100_000_000);

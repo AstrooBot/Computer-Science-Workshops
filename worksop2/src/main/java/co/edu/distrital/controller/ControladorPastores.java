@@ -12,14 +12,27 @@ import co.edu.distrital.model.Pastores.PastorFabrica;
 public class ControladorPastores {
 
     private PastorFabrica pastorFabrica;
-    private ListaCircularEnlazadaDoble<Pastor> listaPastores;
+    ListaCircularEnlazadaDoble<Pastor> listaPastores;
     private Desposeidos<Pastor> desposeidos = new Desposeidos<>();
     private Random random;
+    private boolean direccion;
+    private int cantidadPastores = 0;
+
+    public int getCantidadApuntarPastores() {
+        return cantidadPastores;
+    }
+
+
+
+    public String getDireccion() {
+        return direccion ? "Dirección: Derecha" : "Dirección: Izquierda";
+    }
 
     public ControladorPastores(int semilla) {
         this.pastorFabrica = new PastorFabrica(semilla);
         this.listaPastores = new ListaCircularEnlazadaDoble<>();
         this.random = new Random(semilla);
+
     }
 
     public ListaCircularEnlazadaDoble<Pastor> crearListaPastores(int cantidad) {
@@ -28,6 +41,8 @@ public class ControladorPastores {
             Pastor pastor = pastorFabrica.crearPastor(i + 1);
             listaPastores.insertarNodoInicio(pastor);
         }
+        this.direccion = random.nextBoolean();
+        this.cantidadPastores = random.nextInt(1, listaPastores.tamano);
         return listaPastores;
 
     }
@@ -62,11 +77,11 @@ public class ControladorPastores {
 
     public void verificarOficio() {
         Pastor[] pastores = getPastores();
+        int maxInt = 10;
         boolean condition= true;
-        while(condition) {
-            condition = true;
+        while(condition && maxInt > 0) {
         	for (int i = 1; i +1 < pastores.length; i++) 
-        	{
+        	{   condition = false;
         		Pastor valor1 = pastores[i];
         		Pastor valor2 = pastores[i+1];
 
@@ -74,9 +89,10 @@ public class ControladorPastores {
         			Pastor swap = pastores[i];
         			pastores[i] = pastores[i-1];
         			pastores[i-1] = swap;
-        			condition = false;
+        			condition = true;
         		}
         	}
+            maxInt--;
         }
         listaPastores = new ListaCircularEnlazadaDoble<>();
         for (int i = 0; i < pastores.length; i++) {
@@ -99,29 +115,40 @@ public class ControladorPastores {
     }
 
     public Pastor escogerMenorFieles(Pastor pastorRico) {
-        boolean direccion = random.nextBoolean();
-        int cantidadPastores = random.nextInt(1, listaPastores.tamano);
+   
         NodoDoble<Pastor> actual = listaPastores.buscarNodo(pastorRico);
 
         int menorFieles = actual.getDato().getFieles();
 
-        if(direccion) {
-        for (int i = 0; i <= cantidadPastores; i++) {
+        if(this.direccion) {
+        for (int i = 0; i < this.cantidadPastores; i++) {
                 actual = actual.getSiguiente(); 
                 if(actual.getDato().getFieles() < menorFieles) {
-                    menorFieles = actual.getDato().getDoblones();
+                    menorFieles = actual.getDato().getFieles();
                 }
             }
         }
         else {
-            for (int i = 0; i <= cantidadPastores; i++) {
+            for (int i = 0; i < this.cantidadPastores; i++) {
                 actual = actual.getAnterior(); 
                 if(actual.getDato().getFieles() < menorFieles) {
                     menorFieles = actual.getDato().getFieles();
                 }
             }
         }
-        System.out.println(direccion ? "Dirección: Derecha" : "Dirección: Izquierda");
+        if(menorFieles == pastorRico.getFieles()) {
+            for (int i = 0; i < listaPastores.tamano; i++) {
+                actual = listaPastores.buscarNodo(pastorRico);
+                if(!listaPastores.buscarNodo(pastorRico).getDato().equals(actual.getDato())) {
+                    actual = listaPastores.buscarNodo(pastorRico).getSiguiente();
+                }
+                else {
+                    actual = actual.getSiguiente();
+                    break;
+                }       
+            }
+            
+        }
         return actual.getDato();        
 
     }
@@ -138,16 +165,16 @@ public class ControladorPastores {
         pastorRico.setFieles(0);
         pastorPobre.setDoblones(pastorPobre.getDoblones() + cantidadTransferida);
         pastorPobre.setFieles(pastorPobre.getFieles() + cantidadFieles);
-        return "El pastor " + pastorRico.getId() + " ha transferido " + cantidadTransferida + " doblones al pastor " + pastorPobre.getId() + ".";
+        return "El pastor " + pastorRico.getId() + " ha transferido $" + cantidadTransferida + " y " + cantidadFieles + " de fieles a " + pastorPobre.getId();
     }
 
     public void enviarDesposeidos(Pastor pastorDespoceido) {
-        listaPastores.eliminarNodo(pastorDespoceido);
         desposeidos.insertarNodo(pastorDespoceido);
-        System.out.println(desposeidos.getCabeza().getDato().getDoblones());
-        System.out.println(desposeidos.getCabeza().getDato().getFieles());
-        listaPastores.imprimir();
-        desposeidos.imprimir();
+        listaPastores.eliminarNodo(pastorDespoceido);
+        
+    }
+    public Pastor getWinner() {
+        return listaPastores.getCabeza().getDato();
     }
 
     public int getTamanoDesposeidos() {

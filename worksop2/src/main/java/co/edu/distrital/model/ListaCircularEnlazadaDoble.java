@@ -156,14 +156,12 @@ public class ListaCircularEnlazadaDoble<T> {
     public NodoDoble<T> buscarNodo(T datoBusqueda) {
         NodoDoble<T> actual = this.cabeza;
         if(estaVacia()) return null;
-        do {
+        for (int i = 0; i < this.tamano; i++) {
             if (Objects.equals(actual.getDato(), datoBusqueda)) {
-                return actual;
+                return actual; // Encontrado
             }
-            actual = actual.getSiguiente();
-
+            actual = actual.getSiguiente(); // Avanza
         }
-        while(actual != this.cabeza);
         return null; 
     }
 
@@ -176,17 +174,12 @@ public class ListaCircularEnlazadaDoble<T> {
             this.cola.setSiguiente(this.cabeza);
         }
         else {
-
-            NodoDoble<T> nuevoNodo = new NodoDoble<>(dato, this.cabeza, this.cabeza.getAnterior());
-            this.cabeza.setAnterior(nuevoNodo);
-            this.cabeza = nuevoNodo;
-
-            this.cola.setSiguiente(this.cabeza);
-            NodoDoble<T> penultimo = this.cabeza;
-            while(penultimo.getSiguiente() != this.cabeza) {
-                penultimo = penultimo.getSiguiente();
-            }
-            this.cola.setAnterior(penultimo); 
+        NodoDoble<T> nuevoNodo = new NodoDoble<>(dato);
+        nuevoNodo.setSiguiente(this.cabeza);
+        nuevoNodo.setAnterior(this.cola);
+        this.cabeza.setAnterior(nuevoNodo);
+        this.cola.setSiguiente(nuevoNodo);
+        this.cabeza = nuevoNodo; 
         }
         this.tamano++;
     }
@@ -250,9 +243,7 @@ public class ListaCircularEnlazadaDoble<T> {
         // --- Actualizar tamaño ---
         this.tamano--;
         // --- Opcional: limpiar punteros del nodo eliminado ---
-        nodoAEliminar.setAnterior(null);
-        nodoAEliminar.setSiguiente(null);
-        nodoAEliminar.setDato(null);
+
     }
 
 }

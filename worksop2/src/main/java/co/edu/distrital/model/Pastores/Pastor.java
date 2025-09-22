@@ -18,8 +18,8 @@ public class Pastor {
 
     @Override
     public String toString() {
-        return "Pastor{" +"id=" + id +"oficio=" + oficio + '}';
-        //return "Pastor{" + "id=" + id + ", nombre=" + nombre + ", doblones=" + doblones + ", fieles=" + fieles + ", oficio=" + oficio + '}';
+        
+        return "{P" + id + "$" + doblones + "F" + fieles + "Of" + oficio.charAt(0) + "}";
     }
 
     public int getId() {
