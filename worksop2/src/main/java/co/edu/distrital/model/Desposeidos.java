@@ -12,6 +12,19 @@ public class Desposeidos<T> {
         this.tamano = 0;
     }
 
+    public String getDesposeidos() {
+        if (estaVacia()) {
+            return "Lista de Desposeídos Vacía";
+        }
+        StringBuilder sb = new StringBuilder();
+        NodoSimple<T> actual = this.cabeza;
+        for (int i = 0; i < tamano; i++) {
+            sb.append("\n" + actual + "\n");
+            actual = actual.getSiguiente();
+        }
+        return sb.toString();
+    }
+
     public boolean estaVacia() {
         return tamano == 0;
     }

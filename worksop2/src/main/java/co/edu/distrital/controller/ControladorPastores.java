@@ -22,6 +22,35 @@ public class ControladorPastores {
         return cantidadPastores;
     }
 
+    public String[] getPastoresNombres() {
+        String[] nombres = new String[listaPastores.tamano];
+        NodoDoble<Pastor> actual = listaPastores.getCabeza();
+        for (int i = 0; i < listaPastores.tamano; i++) {
+            nombres[i] = actual.getDato().getNombre();
+            actual = actual.getSiguiente();
+        }
+        return nombres;
+    }
+
+    public String[] getPastoresRiqueza() {
+        String[] riquezas = new String[listaPastores.tamano];
+        NodoDoble<Pastor> actual = listaPastores.getCabeza();
+        for (int i = 0; i < listaPastores.tamano; i++) {
+            riquezas[i] = Integer.toString(actual.getDato().getDoblones());
+            actual = actual.getSiguiente();
+        }
+        return riquezas;
+    }
+
+    public String[] getPastoresFieles() {
+        String[] fieles = new String[listaPastores.tamano];
+        NodoDoble<Pastor> actual = listaPastores.getCabeza();
+        for (int i = 0; i < listaPastores.tamano; i++) {
+            fieles[i] = Integer.toString(actual.getDato().getFieles());
+            actual = actual.getSiguiente();
+        }
+        return fieles;
+    }
 
 
     public String getDireccion() {
@@ -159,6 +188,8 @@ public class ControladorPastores {
         if (nodoRico == null || nodoPobre == null) {
             return "Uno o ambos pastores no se encuentran en la lista.";
         }
+        if(pastorRico.equals(pastorPobre)) {
+            return "El pastor rico y el pastor pobre son la misma persona. No se puede transferir riqueza.";}
         int cantidadTransferida = pastorRico.getDoblones();
         int cantidadFieles = pastorRico.getFieles();
         pastorRico.setDoblones(0);
@@ -174,11 +205,15 @@ public class ControladorPastores {
         
     }
     public Pastor getWinner() {
-        return listaPastores.getCabeza().getDato();
+        return desposeidos.getCabeza().getSiguiente().getDato();
     }
 
     public int getTamanoDesposeidos() {
         return desposeidos.getTamano();
+    }
+
+    public String getDesposeidos() {
+        return desposeidos.getDesposeidos();
     }
 
     public void transferirAlDesposeido(Pastor pastorRico) {

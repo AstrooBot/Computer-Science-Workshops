@@ -13,9 +13,19 @@ public class Mesa {
         this.controladorPastores = new ControladorPastores(semilla);
         controladorPastores.crearListaPastores(cantidadPastores);
         this.random = new Random(semilla);
+        
+    }
+
+    public void  inicioJuego() {
+        System.out.println("Lista de Pastores inicial:");
+        controladorPastores.imprimirListaPastores();
+        System.out.println("Lista verificada de Pastores:");
+        controladorPastores.verificarOficio();
+        controladorPastores.imprimirListaPastores();
+
     }
     //Retorna el pastor que sera enviado a la pila de desposeidos
-    public void inicioJuego() {
+    public void Turno() {
         System.out.println("Lista de Pastores inicial:");
         controladorPastores.imprimirListaPastores();
         System.out.println("Lista verificada de Pastores:");
@@ -47,6 +57,7 @@ public class Mesa {
 
 
     public void loop() {
+        Turno();
         int ronda = 1;
         while (controladorPastores.listaPastores.tamano > 0) {
             System.out.println("--- Ronda " + ronda + " ---");
@@ -67,14 +78,19 @@ public class Mesa {
             }
             else {
                 System.out.println("El pastor rico ha decidido no salvar a un desposeido.");
-                inicioJuego();
+                Turno();
             }
             ronda++;
             System.out.println("---------------------------------------------------");
         }
-        System.out.println(controladorPastores.getWinner().getNombre() + " es el ganador con " + controladorPastores.getWinner().getDoblones() + " doblones y " + controladorPastores.getWinner().getFieles() + " fieles.");
+        System.out.println(getWinner().getNombre() + " es el ganador con " + getWinner().getDoblones() + " doblones y " + getWinner().getFieles() + " fieles.");
         System.out.println("¡El juego ha terminado!");
+        System.out.println(controladorPastores.getDesposeidos());
         
+    }
+
+    public Pastor getWinner() {
+        return controladorPastores.getWinner();
     }
 
     

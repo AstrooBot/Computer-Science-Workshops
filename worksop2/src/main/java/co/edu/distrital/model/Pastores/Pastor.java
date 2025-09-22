@@ -19,7 +19,7 @@ public class Pastor {
     @Override
     public String toString() {
         
-        return "{P" + id + "$" + doblones + "F" + fieles + "Of" + oficio.charAt(0) + "}";
+        return nombre + " " + oficio;
     }
 
     public int getId() {

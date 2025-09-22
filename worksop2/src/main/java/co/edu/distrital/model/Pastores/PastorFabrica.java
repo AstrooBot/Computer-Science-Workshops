@@ -17,8 +17,8 @@ public class PastorFabrica {
 
     public Pastor crearPastor(int id) {
         String nombre = nombresDeCuras[random.nextInt(nombresDeCuras.length)];
-        int doblones = getInt(100_000_000);
-        int fieles = random.nextInt(10_000_000);
+        int doblones = getInt(1000);
+        int fieles = random.nextInt(100);
         String oficio = oficios[random.nextInt(oficios.length)];
         return new Pastor(id, nombre, doblones, fieles, oficio);
     }
