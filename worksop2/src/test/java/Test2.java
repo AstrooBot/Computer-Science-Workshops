@@ -2,7 +2,7 @@ import co.edu.distrital.model.ListaCircularEnlazadaDoble;
 import co.edu.distrital.model.NodoDoble;
 import co.edu.distrital.model.Pastores.*;
 
-public class test2 {
+public class Test2 {
 
     public static void main(String[] args) {
         
