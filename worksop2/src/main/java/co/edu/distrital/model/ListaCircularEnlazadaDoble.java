@@ -183,7 +183,7 @@ public class ListaCircularEnlazadaDoble<T> {
 
             this.cola.setSiguiente(this.cabeza);
             NodoDoble<T> penultimo = this.cabeza;
-            while(penultimo.getSiguiente() != this.cola) {
+            while(penultimo.getSiguiente() != this.cabeza) {
                 penultimo = penultimo.getSiguiente();
             }
             this.cola.setAnterior(penultimo); 
@@ -224,9 +224,9 @@ public class ListaCircularEnlazadaDoble<T> {
         nodoAEliminar.setDato(null); 
     }
 
-    public NodoDoble<T> eliminarNodo(T DatoEliminar) {
+    public void eliminarNodo(T DatoEliminar) {
         NodoDoble<T> nodoAEliminar = buscarNodo(DatoEliminar);
-        if (nodoAEliminar == null) return null; 
+        if (nodoAEliminar == null) throw new NoSuchElementException("No se ha encontrado dato a eliminar.");
         // Identificar los vecinos
         NodoDoble<T> nodoAnterior = nodoAEliminar.getAnterior();
         NodoDoble<T> nodoSiguiente = nodoAEliminar.getSiguiente();
@@ -249,7 +249,10 @@ public class ListaCircularEnlazadaDoble<T> {
         }
         // --- Actualizar tamaño ---
         this.tamano--;
-        return nodoAEliminar;
+        // --- Opcional: limpiar punteros del nodo eliminado ---
+        nodoAEliminar.setAnterior(null);
+        nodoAEliminar.setSiguiente(null);
+        nodoAEliminar.setDato(null);
     }
 
 }
